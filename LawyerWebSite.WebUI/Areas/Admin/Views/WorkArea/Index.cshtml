@@ -1,0 +1,114 @@
+﻿@model List<WorkAreaListViewModel>
+@{
+    int index = 0;
+}
+
+
+@if (ViewBag.EmptyWorkAreasCount > 0)
+{
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>Çalışma Alanı</th>
+                <th>Açıklama</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in (List<Category>)ViewBag.EmptyWorkAreas)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>Çalışma alanına ait açıklama yok</td>
+                    <td><a asp-area="Admin" asp-controller="WorkArea" asp-action="AddWorkArea" class="btn btn-sm btn-outline-dark">Ekle</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+}
+
+
+
+<div class="container">
+    <h4 class="my-2 display-4 text-center">Çalışma Alanları</h4>
+    <div class="accordion" id="accordionExample">
+        <div class="row">
+            @foreach (var item in Model)
+            {
+                index++;
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-header" id="headingOne">
+                            <h2 class="mb-0">
+                                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne-@index" aria-expanded="true" aria-controls="collapseOne">
+                                    @item.Category.Name
+                                </button>
+                            </h2>
+                        </div>
+
+                        <div id="collapseOne-@index" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                            <div class="card-body">
+                                <img src="~/img/workarea-cover/@item.Picture" class="img-fluid w-100" style="max-height: 15rem" />
+                                @Html.Raw(item.Description)
+                                <p class="text-right">
+                                    <a asp-area="Admin" asp-controller="WorkArea" asp-action="EditWorkArea" asp-route-id="@item.Id" class="btn btn-warning btn-sm">Düzenle</a>
+                                    <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteScreen" data-deleted="@item.Id">Sil</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+    </div>
+</div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="deleteScreen" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-danger" id="exampleModalLabel">UYARI</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Çalışma alanını silmek istediğinizden emin misiniz?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Vazgeç</button>
+                <button id="btnDelete" type="button" class="btn btn-primary">Onayla</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#deleteScreen').on('show.bs.modal', function (event) {
+                let actionElement = $(event.relatedTarget);
+                let id = actionElement.data('deleted');
+
+                $('#btnDelete').click(function () {
+                    $.ajax({
+                        type: 'Get',
+                        url: '@this.Url.Action("DeleteWorkArea", "WorkArea", new { area = "Admin" })',
+                        data: { id: id },
+                        dataType: 'json',
+                        contentType: 'application/json; charset=utf-8;',
+                        success: function () {
+                            window.location.reload();
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+}

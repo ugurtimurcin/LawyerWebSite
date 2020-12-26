@@ -1,0 +1,42 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "twitter-bootstrap@4.5.3",
+      "destination": "wwwroot/library/bootstrap",
+      "files": [ "js/bootstrap.min.js", "js/bootstrap.min.js.map", "css/bootstrap.min.css", "css/bootstrap.min.css.map", "js/bootstrap.bundle.min.js", "js/bootstrap.bundle.min.js.map"]
+    },
+    {
+      "library": "jquery@3.5.1",
+      "destination": "wwwroot/library/jquery",
+      "files": [ "jquery.min.js", "jquery.min.map" ]
+    },
+    {
+      "library": "jquery-validate@1.19.2",
+      "destination": "wwwroot/library/jquery-validation",
+      "files": [ "jquery.validate.min.js" ]
+    },
+    {
+      "library": "jquery-validation-unobtrusive@3.2.11",
+      "destination": "wwwroot/library/jquery-validation-unobtrusive",
+      "files": [ "jquery.validate.unobtrusive.min.js" ]
+    },
+    {
+      "library": "font-awesome@5.15.1",
+      "destination": "wwwroot/library/font-awesome",
+      "files": [ "css/all.min.css", "js/all.min.js", "webfonts/fa-solid-900.woff2", "webfonts/fa-brands-400.woff2", 
+                 "webfonts/fa-solid-900.woff", "webfonts/fa-brands-400.woff", "webfonts/fa-brands-400.ttf", "webfonts/fa-solid-900.ttf" ]
+    },
+    {
+      "library": "ckeditor5@24.0.0",
+      "destination": "wwwroot/library/ckeditor",
+      "files": [ "ckeditor.js", "ckeditor.js.map", "translations/tr.js" ]
+    },
+    {
+      "library": "datatables@1.10.21",
+      "destination": "wwwroot/library/datatables",
+      "files": [ "css/dataTables.bootstrap4.min.css", "js/dataTables.bootstrap4.min.js", "js/jquery.dataTables.min.js" ]
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+*{
+    box-sizing: border-box;
+}
+
+img{
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+.carousel-inner{
+    position: relative;
+}
+.carousel-caption{
+    background-color:rgba(0, 0, 0, 0.5);
+    width: 302px;
+    position: absolute;
+    top: 20px;
+}
+
+.border {
+    width: 200px;
+    height: 100px;
+}
+
+.footertext{
+    color: #617781;
+    text-align: justify;
+}
+
+.navbar-brand {
+    visibility: hidden;
+    
+}
+
+#scrollUp-btn {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+}
+
+@media only screen and (max-width: 600px) {
+    .navbar-brand {
+        visibility: visible;
+        font-family: 'Dancing Script', cursive;
+    }
+}

@@ -1,0 +1,107 @@
+﻿@{ 
+    var active = string.Empty;
+    if (TempData["Active"] != null)
+    {
+        active = TempData["Active"].ToString();
+
+    }
+}
+
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Yönetim Paneli - @ViewBag.title</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="~/temp/bootstrap.min.css" rel="stylesheet" />
+    <!-- Custom styles for this template -->
+    <link href="~/temp/startbootstrap-simple-sidebar-gh-pages/css/simple-sidebar.css" rel="stylesheet" />
+    <link href="~/library/font-awesome/css/all.min.css" rel="stylesheet" />
+    <link href="~/css/leftmenu-style.css" rel="stylesheet" />
+    @RenderSection("CSS", false)
+
+
+</head>
+
+<body>
+
+    <div class="d-flex" id="wrapper">
+
+        <!-- Sidebar -->
+        <div class=" border-right" id="sidebar-wrapper" style="background-color: #4F5F6F;">
+            <div style="cursor: context-menu" class="sidebar-heading text-white"><i class="fas fa-cogs mr-2 text-danger"></i>Yönetim Paneli</div>
+            <div id="hvr" class="list-group list-group-flush">
+                <a style="@(active=="home"?"background-color: #34404db7;color: #f0f1f3fb;":"")" asp-area="Admin" asp-controller="Home" asp-action="Index" class="list-group-item list-group-item-action border-0"><i class="fas fa-home mr-2"></i>Anasayfa</a>
+                <a style="@(active=="category"?"background-color: #34404db7;color: #f0f1f3fb;":"")" asp-area="Admin" asp-controller="Category" asp-action="Index" class="list-group-item list-group-item-action border-0"><i class="fas fa-list-alt mr-2"></i>Kategoriler</a>
+                <a style="@(active=="article"?"background-color: #34404db7;color: #f0f1f3fb;":"")" asp-area="Admin" asp-controller="Article" asp-action="Index" class="list-group-item list-group-item-action border-0"><i class="fas fa-pen-nib mr-2"></i>Makaleler</a>
+                <a style="@(active=="workarea"?"background-color: #34404db7;color: #f0f1f3fb;":"")" asp-area="Admin" asp-controller="WorkArea" asp-action="Index" class="list-group-item list-group-item-action border-0"><i class="fas fa-briefcase mr-2"></i>Çalışma Alanları</a>
+                <a style="@(active=="profile"?"background-color: #34404db7;color: #f0f1f3fb;":"")" asp-area="Admin" asp-controller="Profile" asp-action="Index" class="list-group-item list-group-item-action border-0"><i class="fas fa-user mr-2"></i>Profilim</a>
+                <a style="@(active=="user"?"background-color: #34404db7;color: #f0f1f3fb;":"")" asp-area="Admin" asp-controller="User" asp-action="Index" class="list-group-item list-group-item-action border-0 mb-5"><i class="fas fa-users mr-2"></i>Kişiler</a>
+                <a asp-area="" asp-controller="Dashboard" asp-action="Logout" class="list-group-item list-group-item-action"><i class="fas fa-sign-out-alt mr-2"></i>Çıkış</a>
+            </div>
+        </div>
+        <!-- /#sidebar-wrapper -->
+        <!-- Page Content -->
+        <div id="page-content-wrapper" style="background-color: #E6E5E5">
+
+            <nav class="navbar navbar-expand-lg navbar-light">
+                <button class="btn btn-primary" style="background-color: #4F5F6F" id="menu-toggle"><i class="fas fa-align-justify"></i></button>
+
+            </nav>
+
+            @RenderBody()
+        </div>
+        <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+    <!-- Bootstrap core JavaScript -->
+    <script src="~/library/jquery/jquery.min.js"></script>
+    <script src="~/library/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/library/font-awesome/js/all.min.js"></script>
+    @RenderSection("Scripts", false)
+    <!-- Menu Toggle Script -->
+    <script>
+        $(document).ready(function () {
+            $("#menu-toggle").click(function (e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+            });
+
+            $("#menu-toggle").click(function (e) {
+                e.preventDefault();
+                $("#menu-toggle").children().toggleClass("fa-align-justify fa-times")
+            })
+
+            var width = $(window).width();
+
+            if (width > 768) {
+                $("#menu-toggle").children().removeClass("fa-align-justify").addClass("fa-times");
+            }
+
+            $(window).resize(function () {
+                $(".d-flex").each(function (i, item) {
+                    item = $(item);
+
+                    if (item.width() >= 768) {
+                        $("#menu-toggle").children().removeClass("fa-times fa-align-justify").addClass("fa-times");
+                    } else if (item.width() < 768) {
+                        $("#menu-toggle").children().removeClass("fa-times fa-align-justify").addClass("fa-align-justify");
+                    }
+                });
+            });
+
+        });
+    </script>
+
+</body>
+
+</html>

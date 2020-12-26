@@ -1,0 +1,97 @@
+﻿@model List<AppUserListViewModel>
+<h4 class="display-4 text-center">Kişi Listesi</h4>
+@if (Model.Count > 0)
+{
+    <a asp-area="Admin" asp-controller="User" asp-action="Register" class="btn btn-info mb-3">Kişi Ekle</a>
+    <table id="myTable" class="table table-bordere table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>E-Posta</th>
+                <th>Kullanıcı Adı</th>
+                <th>İsim Soyisim</th>
+                <th>Hesap Onaylandı</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model)
+            {
+                <tr>
+                    <td>@user.Email</td>
+                    <td>@user.UserName</td>
+                    <td>@user.FirstName @user.LastName</td>
+                    <td style="font-size: 1.2rem;">@Html.Raw(user.IsConfirmed == true ? "<i class='fas fa-check-circle text-success'></i>": "<i class='fas fa-times-circle text-danger'></i>")</td>
+                    <td>
+                        <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteScreen" data-deleted="@user.Id">Sil</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="lead text-center mt-5">
+        Henüz kayıtlı kişi bulunmamaktadır.<br />
+        <a asp-area="Admin" asp-controller="User" asp-action="Register" class="btn btn-info">Kişi Ekle</a>
+    </div>
+}
+
+
+<!-- Modal -->
+<div class="modal fade" id="deleteScreen" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-danger" id="exampleModalLabel">UYARI</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Kişiyi silmek istediğinizden emin misiniz?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Vazgeç</button>
+                <button id="btnDelete" type="button" class="btn btn-primary">Onayla</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section CSS{
+    <link href="~/library/datatables/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+}
+
+@section Scripts{
+    <script src="~/library/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="~/library/datatables/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable();
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#deleteScreen').on('show.bs.modal', function (event) {
+                let actionElement = $(event.relatedTarget);
+                let id = actionElement.data('deleted');
+
+                $('#btnDelete').click(function () {
+                    $.ajax({
+                        type: 'Get',
+                        url: '@this.Url.Action("DeleteUser", "User", new { area = "Admin" })',
+                        data: { id: id },
+                        dataType: 'json',
+                        contentType: 'application/json; charset=utf-8;',
+                        success: function () {
+                            window.location.reload();
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+
+}

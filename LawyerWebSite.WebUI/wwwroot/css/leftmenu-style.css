@@ -1,0 +1,14 @@
+#hvr a {
+    background-color: #4F5F6F;
+    color: #c4cad1b7;
+}
+
+#hvr a:hover {
+    background-color: #34404db7;
+    color: #f0f1f3fb;
+}
+
+#clickedMenu {
+    background-color: #34404db7;
+    color: #f0f1f3fb;
+}

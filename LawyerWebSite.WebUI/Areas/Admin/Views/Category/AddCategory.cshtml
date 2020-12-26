@@ -1,0 +1,37 @@
+﻿@model CategoryAddViewModel
+
+<h4 class="display-4 text-center">Kategori Ekle</h4>
+
+@if (ViewBag.ExistCategory != null)
+{
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        Sistemde <strong>@ViewBag.ExistCategory</strong> adında kategori mevcut. Lütfen farklı bir kategori adı belirleyin.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+<form class="p-3 w-50" method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="form-group row">
+        <label asp-for="Name" class="col-form-label col-sm-3">Kategori Adı</label>
+        <div class="col-sm-9">
+            <input asp-for="Name" class="form-control" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="offset-sm-3 col-sm-9">
+            <button type="submit" class="btn btn-primary float-right">Kaydet</button>
+            <a asp-area="Admin" asp-controller="Category" asp-action="Index" class="btn btn-secondary float-right mr-3">Vazgeç</a>
+        </div>
+    </div>
+</form>
+
+@section Scripts{
+    <script src="~/library/jquery-validation/jquery.validate.min.js"></script>
+    <script src="~/library/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
+

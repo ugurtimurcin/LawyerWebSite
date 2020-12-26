@@ -1,0 +1,51 @@
+﻿<div class="row m-5 my-4">
+    <div class="col-md-4">
+        <div class="card text-white mb-3" style="max-width: 18rem; background-color: #212529">
+            <div class="card-header lead">Kategoriler</div>
+            <div class="card-body">
+                <p class="card-text">Sisteme kayıtlı toplam <strong class="lead text-info">@ViewBag.TotalCategory</strong> kategori bulunmaktadır.</p>
+                <a asp-area="Admin" asp-controller="Category" asp-action="Index" class="float-right btn btn-sm btn-light">Tümünü Görüntüle</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card text-white mb-3" style="max-width: 18rem; background-color: #212529">
+            <div class="card-header lead">Makaleler</div>
+            <div class="card-body">
+                <p class="card-text">Sisteme kayıtlı toplam <strong class="lead text-info">@ViewBag.TotalArticle</strong> makale bulunmaktadır.</p>
+                <a asp-area="Admin" asp-controller="Article" asp-action="Index" class="float-right btn btn-sm btn-light">Tümünü Görüntüle</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card text-white mb-3" style="max-width: 18rem; background-color: #212529">
+            <div class="card-header lead">Üyeler</div>
+            <div class="card-body">
+                <p class="card-text">Sisteme kayıtlı toplam <strong class="lead text-info">@ViewBag.TotalUser</strong> üye bulunmaktadır.</p>
+                <a asp-area="Admin" asp-controller="User" asp-action="Index" class="float-right btn btn-sm btn-light">Tümünü Görüntüle</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card text-white mb-3" style="max-width: 18rem; background-color: #212529">
+            <div class="card-header lead">Çalışma Alanları</div>
+            <div class="card-body">
+                <p class="card-text">Sisteme kayıtlı toplam <strong class="lead text-info">@ViewBag.TotalWorkArea</strong> çalışma alanı bulunmaktadır.</p>
+                <a asp-area="Admin" asp-controller="WorkArea" asp-action="Index" class="float-right btn btn-sm btn-light">Tümünü Görüntüle</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card text-white mb-3" style="max-width: 18rem; background-color: #212529">
+            <div class="card-header lead">Çalışma Alanları</div>
+            <div class="card-body">
+                <p class="card-text">Sisteme kayıtlı atanmayı bekleyen toplam <strong class="lead text-info">@ViewBag.TotalNotAssigntWorkArea</strong> çalışma alanı bulunmaktadır.</p>
+                <a asp-area="Admin" asp-controller="WorkArea" asp-action="Index" class="float-right btn btn-sm btn-light">Tümünü Görüntüle</a>
+            </div>
+        </div>
+    </div>
+</div>

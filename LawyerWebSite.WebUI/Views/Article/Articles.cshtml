@@ -1,0 +1,44 @@
+﻿@model CategoryAllListViewModel
+
+<div class="container">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb w-100" style="background: none;">
+            <li class="breadcrumb-item"><a class="text-dark text-decoration-none" asp-controller="Home" asp-action="Index">Anasayfa</a></li>
+            <li class="breadcrumb-item"><a class="text-dark text-decoration-none" asp-controller="Article" asp-action="Index">Makaleler</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.Name</li>
+        </ol>
+    </nav>
+
+    <div class="container my-3">
+        @if (Model.Articles.Count > 0)
+        {
+<div class="row my-3">
+    @foreach (var article in Model.Articles)
+    {
+<div class="col-md-4">
+    <div class="card mx-2 mb-3">
+        <img src="~/img/article-cover/@article.Picture" class="card-img-top" style="height: 240px!important;" alt="@article.Title">
+        <div class="card-body">
+            <h5 class="card-title" title="@article.Title">@(article.Title.Length>25 ? article.Title.Substring(0,25) + "..." : article.Title)</h5>
+            <p class="card-text text-justify">
+                @{ var content = Regex.Replace(article.Content, @"<(.|\n)*?>", string.Empty); }
+                @(content.Length > 250 ? content.Substring(0,248) + "..." : content)<a asp-controller="Article" asp-action="Detail" asp-route-url="@article.Url" class="btn btn-link">devamı</a>
+            </p>
+            <p class="card-text float-right"><small class="text-muted">@article.DateTime.ToString("D", new System.Globalization.CultureInfo("tr-TR"))</small></p>
+        </div>
+    </div>
+</div>}
+</div> }
+else
+{
+<div class="row">
+    <div class="col-md-6">
+        <img src="~/img/lawyer-pen.png" alt="..." />
+    </div>
+    <div class="col-md-6">
+        <h4 class="display-4 mt-5">Üzgünüz...</h4>
+        <p class="lead">@Model.Name ile ilgili yayınlanan makale bulunmamaktadır...</p>
+    </div>
+</div>      }
+    </div>
+</div>

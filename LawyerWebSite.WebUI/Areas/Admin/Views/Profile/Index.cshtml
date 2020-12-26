@@ -1,0 +1,61 @@
+﻿@model AppUserEditViewModel
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success text-center alert-dismissible fade show" role="alert">
+        @Html.Raw(TempData["Success"])
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+<h4 class="display-4 text-center">Profilim</h4>
+<form class="w-50 mx-auto shadow p-3" method="post">
+    <div class="form-group row">
+        <label class="col-md-3 col-form-label" asp-for="FirstName">İsim</label>
+        <div class="col-md-9">
+            <input class="form-control" asp-for="FirstName" />
+            <span asp-validation-for="FirstName" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-md-3 col-form-label" asp-for="LastName">Soyisim</label>
+        <div class="col-md-9">
+            <input class="form-control" asp-for="LastName" />
+            <span asp-validation-for="LastName" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-md-3 col-form-label" asp-for="Email">E-Posta</label>
+        <div class="col-md-9">
+            <input class="form-control" asp-for="Email" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-md-3 col-form-label" asp-for="UserName">Kulllanıcı Adı</label>
+        <div class="col-md-9">
+            <input class="form-control" asp-for="UserName" readonly />
+            <span asp-validation-for="UserName" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-9 offset-sm-3">
+            <a asp-area="Admin" asp-controller="Profile" asp-action="UpdatePassword" class="btn btn-link">Şifremi Güncelle</a>
+            <button type="submit" class="btn btn-primary float-right">Kaydet</button>
+            <a asp-area="Admin" asp-controller="Home" asp-action="Index" class="btn btn-secondary float-right mr-3">Vazgeç</a>
+        </div>
+    </div>
+</form>
+
+
+@section Scripts{
+    <script src="~/library/jquery-validation/jquery.validate.min.js"></script>
+    <script src="~/library/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+}
+

@@ -1,0 +1,81 @@
+﻿@model List<CategoryListViewModel>
+    <h4 class="display-4 text-center">Kategoriler</h4>
+@if (Model.Count > 0)
+{
+    <a asp-area="Admin" asp-controller="Category" asp-action="AddCategory" class="btn btn-info btn-sm mt-5">Kategori Ekle</a>
+    <table class="table table-hover w-50">
+        <thead class="thead-dark">
+            <tr>
+                <th>Kategori Adı</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+
+            @foreach (var category in Model)
+            {
+                <tr>
+                    <td>@category.Name</td>
+                    <td>
+                        <a asp-area="Admin" asp-controller="Category" asp-action="EditCategory" asp-route-id="@category.Id" class="btn btn-sm btn-warning">Düzenle</a>
+                        <a class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteScreen" data-deleted="@category.Id">Sil</a>
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+}
+else
+{
+    <div class="lead text-center mt-5">
+        Henüz herhangi bir kategori bulunmamaktadır.<br />
+        <a asp-area="Admin" asp-controller="Category" asp-action="AddCategory" class="btn btn-info">Kategori Ekle</a>
+    </div>
+}
+
+
+<!-- Modal -->
+<div class="modal fade" id="deleteScreen" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-danger" id="exampleModalLabel">UYARI</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Kategoriyi silmek istediğinizden emin misiniz?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Vazgeç</button>
+                <button id="btnDelete" type="button" class="btn btn-primary">Onayla</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#deleteScreen').on('show.bs.modal', function (event) {
+                let actionElement = $(event.relatedTarget);
+                let id = actionElement.data('deleted');
+
+                $('#btnDelete').click(function () {
+                    $.ajax({
+                        type: 'Get',
+                        url: '@this.Url.Action("DeleteCategory", "Category", new { area = "Admin" })',
+                        data: { id: id },
+                        dataType: 'json',
+                        contentType: 'application/json; charset=utf-8;',
+                        success: function () {
+                            window.location.reload();
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+}

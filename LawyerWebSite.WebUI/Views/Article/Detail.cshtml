@@ -1,0 +1,34 @@
+﻿@model ArticleListViewModel
+
+    <div class="container my-2">
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb w-100" style="background: none;">
+                <li class="breadcrumb-item"><a class="text-dark text-decoration-none" asp-controller="Home" asp-action="Index">Anasayfa</a></li>
+                <li class="breadcrumb-item"><a class="text-dark text-decoration-none" asp-controller="Article" asp-action="Index">Makaleler</a></li>
+                <li class="breadcrumb-item"><a class="text-dark text-decoration-none" asp-controller="Article" asp-action="Articles" asp-route-url="@ViewBag.Category.Url">@ViewBag.Category.Name</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@Model.Title</li>
+            </ol>
+        </nav>
+
+
+
+        <img src="~/img/article-cover/@Model.Picture" alt="@Model.Title" />
+
+        <p class="lead text-right">@(Model.DateTime.ToString("D", new System.Globalization.CultureInfo("tr-TR")))</p>
+
+        <h4 class="display-4 text-center">@Model.Title</h4>
+
+        <p class="text-justify">@Html.Raw(Model.Content)</p>
+    </div>
+
+
+
+
+
+    @section Scripts{
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-5f8cbb5e6fa3d6fd"></script>
+        <script>$(function () {
+            $('[data-toggle="tooltip"]').tooltip()
+        })</script>
+    }

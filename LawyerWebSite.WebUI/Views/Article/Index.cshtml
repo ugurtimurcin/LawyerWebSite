@@ -1,0 +1,61 @@
+﻿@model List<CategoryListViewModel>
+
+<div class="jumbotron mb-0 jumbotron-fluid" style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../img/blog-header-makaleler.jpg); background-size: cover;">
+    <div class="container">
+        <h1 class="display-4 text-center text-light">MAKALELER</h1>
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mx-auto w-25 justify-content-center" style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));">
+                <li class="breadcrumb-item"><a class="text-light text-decoration-none" asp-controller="Home" asp-action="Index">Anasayfa</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Makaleler</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+
+
+<div class="container">
+    <div class="row my-5 mx-auto">
+        @foreach (var category in Model)
+        {
+<div class="col-md-4 text-center">
+    <div class="card border-light mb-3" style="max-width: 18rem;">
+        <div class="card-header"></div>
+        <div class="card-body text-dark">
+            <h5 class="card-title">@category.Name</h5>
+            <a asp-controller="Article" asp-action="Articles" asp-route-url="@category.Url" class="btn btn-dark">Tüm Makaleler</a>
+        </div>
+    </div>
+
+</div>}
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+
+            var wid = $(window).width();
+            if (wid > 489 && wid < 992) {
+                $(".breadcrumb").removeClass("w-25 w-100").addClass("w-50");
+            } else if (wid < 489) {
+                $(".breadcrumb").removeClass("w-25").addClass("w-100");
+            }
+
+            $(window).resize(function () {
+                $(".jumbotron").each(function (i, e) {
+                    e = $(e);
+                    if (e.width() > 489 && e.width() < 992) {
+                        $(".breadcrumb").removeClass("w-25 w-100").addClass("w-50");
+                    } else if (e.width() >= 992 ) {
+                        $(".breadcrumb").removeClass("w-50 w-100").addClass("w-25");
+                    } else if (e.width()< 489) {
+                        $(".breadcrumb").removeClass("w-50").addClass("w-100");
+                    }
+                });
+            });
+        });
+
+    </script>
+}

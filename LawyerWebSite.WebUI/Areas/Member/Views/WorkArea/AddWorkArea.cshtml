@@ -1,0 +1,74 @@
+﻿@model WorkAreaAddViewModel
+
+
+<h4 class="display-4 text-center">Çalışma Alanı Ekle</h4>
+
+
+<form class="p-3 w-75" method="post" enctype="multipart/form-data">
+    <div asp-validation-summary="ModelOnly"></div>
+    
+    <div class="form-group row">
+        <label class="col-form-label col-sm-3" asp-for="Description">İçerik</label>
+        <div class="col-sm-9">
+            <textarea id="editor" class="form-control" asp-for="Description"></textarea>
+            <span asp-validation-for="Description" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-form-label col-sm-3" asp-for="Picture">Fotoğraf</label>
+        <div class="col-sm-9">
+            <input type="file" name="pic" class="form-control-file" />
+            <span asp-validation-for="Picture" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label class="col-form-label col-sm-3" asp-for="CategoryId">Kategori</label>
+        <div class="col-sm-9">
+            <select class="form-control" asp-for="CategoryId" asp-items="ViewBag.Categories">
+                <option selected value="-1" disabled>Seçiniz</option>
+            </select>
+            <span asp-validation-for="CategoryId" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-9 offset-sm-3">
+            <button type="submit" class="btn btn-primary float-right">Kaydet</button>
+            <a asp-area="Member" asp-controller="WorkArea" asp-action="Index" class="btn btn-secondary float-right mr-3">Vazgeç</a>
+        </div>
+    </div>
+
+</form>
+
+
+@section Scripts{
+
+    <script src="~/library/jquery-validation/jquery.validate.min.js"></script>
+    <script src="~/library/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/library/ckeditor/ckeditor.js"></script>
+    <script src="~/library/ckeditor/translations/tr.js"></script>
+    <script>function MinHeightPlugin(editor) {
+            this.editor = editor;
+        }
+
+        MinHeightPlugin.prototype.init = function () {
+            this.editor.ui.view.editable.extendTemplate({
+                attributes: {
+                    style: {
+                        height: '300px'
+                    }
+                }
+            });
+        };
+
+        ClassicEditor.builtinPlugins.push(MinHeightPlugin);
+
+        ClassicEditor
+            .create(document.querySelector('#editor'))
+            .catch(error => {
+                console.error(error);
+            });</script>
+
+}

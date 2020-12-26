@@ -1,0 +1,128 @@
+﻿@{ 
+    var active = string.Empty;
+    if (TempData["Active"] !=null)
+    {
+        active = TempData["Active"].ToString();
+    }
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/x-icon" href="~/img/icon1.png" />
+    <link href="~/library/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/library/font-awesome/css/all.min.css" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link href="~/css/style.css" rel="stylesheet" />
+    <title>@ViewBag.Title - X HUKUK BÜROSU | İSTANBUL</title>
+</head>
+<body>
+
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+        <a class="navbar-brand text-secondary" asp-controller="Home" asp-action="Index"><i class="fas fa-balance-scale mr-2" style="color: #966F33"></i>X HUKUK BÜROSU</a>
+        <button id="#menu-toggle" class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link @(active == "home"?"active":"")">Anasayfa</a></li>
+                <li class="nav-item"><a asp-area="" asp-controller="WorkArea" asp-action="Index" class="nav-link @(active == "workareas"?"active":"")">Çalışma Alanları</a></li>
+                <li class="nav-item"><a asp-area="" asp-controller="Article" asp-action="Index" class="nav-link @(active == "articles"?"active":"")">Makaleler</a></li>
+                <li class="nav-item"><a asp-area="" asp-controller="Home" asp-action="Contact" class="nav-link @(active == "contact"?"active":"")">İletişim</a></li>
+            </ul>
+        </div>
+    </nav>
+
+
+    <article>
+        @RenderSection("Carousel", false)
+
+
+
+        @RenderBody()
+
+
+        @RenderSection("Contact", false)
+
+        <a id="scrollUp-btn" class="text-decoration-none"><i class="fas fa-chevron-up fa-pull-right text-secondary" style="font-size: 3rem;"></i></a>
+    </article>
+
+    <footer>
+        <div class="container-fluid bg-dark">
+            <div class="container">
+                <div class="row bg-dark pt-3 pb-3">
+                    <div class="col-md-4 my-auto text-white">
+                        <h4>İletişim Bilgileri</h4>
+
+                        <div class="tel clearfix">
+                            <i class="fas fa-mobile-alt mr-2 d-block float-left"></i>
+                            <p class="float-left" style="line-height: 15px;">
+                                <strong>Tel: </strong><a class="text-light text-decoration-none" href="tel: +90 500 000 00 00">+90 500 000 00 00</a>
+                            </p>
+                        </div>
+                        <div class="mail ">
+                            <i class="fas fa-envelope mr-2 d-block float-left"></i>
+                            <p class="float-left" style="line-height: 15px;">
+                                <strong>Mail: </strong><a class="text-light text-decoration-none" href="mailto:iletisim@xhukuk.av.tr">iletisin@xhukuk.av.tr</a>
+                            </p>
+                        </div>
+                        <br />
+                        <div class="clearfix"></div>
+                        <div class="">
+                            <a href="linkedin.com/in/" class="text-light text-decoration-none" title="Linkedin"><i style="font-size: 2rem;" class="fab fa-linkedin"></i></a>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <h4 class="text-white">UYARI</h4>
+                        <p class="footertext text-justify">
+                            Bu sitedeki bilgiler kesinlikle hukuki tavsiye niteliğinde olmayıp,
+                            hiçbir şekilde site ziyaretçileri ile X Hukuk Bürosu 
+                            arasında vekil-müvekkil ilişkisi kurulmasına matuf biçimde yorumlanamaz yahut
+                            kullanılamaz. Site içeriğinde yer alan bilgilere istinaden profesyonel hukuki
+                            yardım almadan hareket edilmesi durumunda oluşabilecek herhangi bir zarardan
+                            büromuz sorumlu değildir.1136 sayılı Avukatlık Yasası yahut Türkiye Barolar
+                            Birliği Meslek kuralları uyarınca site içeriği hiçbir şekilde reklam amaçlı
+                            yahut ticari amaçlı kullanılamaz. Site içeriğinde yer alan bilgilerin telif
+                            hakkı X Hukuk Bürosuna'a aittir. İzin alınmaksızın ve kaynak
+                            göstermeksizin alıntı yapılamaz.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </footer>
+
+        
+    
+
+    <script src="~/library/jquery/jquery.min.js"></script>
+    <script src="~/library/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/library/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/library/font-awesome/js/all.min.js"></script>
+    @RenderSection("Scripts", false)
+    <script>
+        $(document).ready(function () {
+            $("#scrollUp-btn").hide();
+            $(window).scroll(function () {
+                var position = $(document).scrollTop();
+                if (position < 20) {
+                    $("#scrollUp-btn").hide().fadeOut();
+                } else {
+                    $("#scrollUp-btn").show().fadeIn();
+                }
+            });
+
+
+            $("#scrollUp-btn").click(function () {
+                $("html, body").animate({ scrollTop: 0 }, 420);
+                return false;
+            });
+        });
+    </script>
+</body>
+</html>

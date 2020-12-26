@@ -1,0 +1,58 @@
+﻿@{
+    int index = 0;
+}
+
+<div class="container pt-3">
+    @if (ViewBag.WorkAreas.Count > 0)
+    {
+        <h4 class="display-4 text-center text-secondary">ÇALIŞMA ALANLARI</h4>
+        <div class="row">
+            @foreach (var item in ViewBag.WorkAreas)
+            {
+                index++;
+                <div class="col-md-4 my-2">
+                    <div class="jumbotron shadow pt-0 px-0 pb-2 text-center">
+                        <img class="w-100 rounded-top mb-1" style="max-height: 10rem" src="~/img/workarea-cover/@item.Picture" alt="@item.Category.Name" />
+                        
+                            <button class="btn btn-dark" type="button" data-toggle="collapse" data-target="#collapseExample-@index" aria-expanded="false" aria-controls="collapseExample">
+                                <i class="fas fa-gavel text-secondary mr-2"></i>@item.Category.Name
+                            </button>
+
+                            <div class="collapse" id="collapseExample-@index">
+                                <div class="card p-2 text-left border-0 m-0 card-body mt-1" style="background: none;">
+                                    @Html.Raw(item.Description.Length > 200 ? item.Description.Substring(0, 200) + "... " : $"{item.Description}")
+                                    <a asp-controller="WorkArea" asp-action="Index" class="text-decoration-none">devamı</a>
+                                </div>
+                            </div>
+                        
+                    </div>
+                </div>
+            }
+
+        </div>
+    }
+
+    @if (ViewBag.Articles.Count > 0)
+    {
+        <h4 class="display-4 text-center text-secondary">MAKALELER</h4>
+        <div class="row">
+            @foreach (var item in ViewBag.Articles)
+            {
+                item.Content = Regex.Replace(item.Content, @"<(.|\n)*?>", string.Empty);
+                <div class="col-md-4">
+                    <div class="card shadow mx-2 mb-3">
+                        <img src="~/img/article-cover/@item.Picture" class="card-img-top" style="height: 240px!important;" alt="@item.Title">
+                        <div class="card-body">
+                            <h5 class="card-title" title="@item.Title">@(item.Title.Length > 28 ? item.Title.Substring(0, 28) + "..." : item.Title)</h5>
+                            <div class="card-text text-justify">
+                                @Html.Raw(item.Content.Substring(0, 220) + "... ")
+                                <a asp-controller="Article" asp-action="Detail" asp-route-url="@item.Url" class="text-decoration-none">devamı</a>
+                            </div>
+                            <p class="card-text float-right"><small class="text-muted">@item.DateTime.ToString("D", new System.Globalization.CultureInfo("tr-TR"))</small></p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

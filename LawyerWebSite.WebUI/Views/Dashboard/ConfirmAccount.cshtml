@@ -1,0 +1,17 @@
+﻿@{ 
+    Layout = "_DashboardLayout";
+}
+
+@if (ViewBag.Success != null)
+{
+    <div class="alert alert-success text-center p-5" role="alert">
+        @ViewBag.Success Giriş yapmak için <a class="text-decoration-none" href ="https://localhost:44391/Dashboard"><strong>buraya</strong></a> tıklayın!
+    </div>
+}
+
+@if (ViewBag.Error != null)
+{
+<p class="lead">
+    @ViewBag.Error
+</p>
+}

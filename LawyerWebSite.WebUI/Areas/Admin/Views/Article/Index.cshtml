@@ -1,0 +1,86 @@
+﻿@model List<ArticleListViewModel>
+    <h4 class="display-4 text-center">Makaleler</h4>
+@if (Model.Count > 0)
+{
+    <a asp-area="Admin" asp-controller="Article" asp-action="AddArticle" class="btn btn-info mt-5 mb-2 ml-2">Makale Yaz</a>
+    <div class="row">
+        @foreach (var article in Model)
+        {
+            <div class="col-md-4">
+                <div class="card mx-2 mb-3">
+                    <img src="~/img/article-cover/@article.Picture" class="card-img-top" style="height: 220px!important;" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title" title="@article.Title">@(article.Title.Length>25 ? article.Title.Substring(0,25) + "..." : article.Title)</h5>
+                        <p class="card-text">
+                            @{
+                                var content = Regex.Replace(article.Content, @"<(.|\n)*?>", string.Empty);
+                            }
+                            @(content.Length > 250 ? content.Substring(0,250) + "..." : content)
+                        </p>
+                        <p class="card-text"><small class="text-muted">@article.DateTime.ToString("D", new System.Globalization.CultureInfo("tr-TR"))</small></p>
+                        <div class="float-right">
+                            <a asp-area="Admin" asp-controller="Article" asp-action="EditArticle" asp-route-id="@article.Id" class="btn btn-sm btn-warning">Düzenle</a>
+                            <a data-toggle="modal" data-target="#deleteScreen" data-deleted="@article.Id" class="btn btn-sm btn-danger">Sil</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class="lead text-center mt-5">
+        Henüz yayınlanan makale yok.<br />
+        <a asp-area="Admin" asp-controller="Article" asp-action="AddArticle" class="btn btn-info">Makale Yaz</a>
+    </div>
+
+}
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="deleteScreen" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title text-danger" id="exampleModalLabel">UYARI</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Makaleyi silmek istediğinizden emin misiniz?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Vazgeç</button>
+                <button id="btnDelete" type="button" class="btn btn-primary">Onayla</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#deleteScreen').on('show.bs.modal', function (event) {
+                let actionElement = $(event.relatedTarget);
+                let id = actionElement.data('deleted');
+
+                $('#btnDelete').click(function () {
+                    $.ajax({
+                        type: 'Get',
+                        url: '@this.Url.Action("DeleteArticle", "Article", new { area="Admin" })',
+                        data: { id: id },
+                        dataType: 'json',
+                        contentType: 'application/json; charset=utf-8;',
+                        success: function () {
+                            window.location.reload();
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+}

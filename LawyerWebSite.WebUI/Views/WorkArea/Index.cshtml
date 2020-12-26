@@ -1,0 +1,78 @@
+﻿@model List<WorkAreaListViewModel>
+@{
+    int index = 0;
+}
+
+<div class="jumbotron mb-0 jumbotron-fluid" style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(../img/calisma-alanlari.jpg); background-size: cover;">
+    <div class="container">
+        <h1 class="display-4 text-center text-light">ÇALIŞMA ALANLARI</h1>
+
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb w-25 mx-auto justify-content-center" style="background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));">
+                <li class="breadcrumb-item"><a asp-controller="Home" asp-action="Index" class="text-decoration-none text-light">Anasayfa</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Çalışma Alanları</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+    
+
+<div class="container my-4">
+    <div class="accordion mb-5 my-auto" id="accordionExample">
+        @foreach (var item in Model)
+        {
+            index++;
+            <div class="card">
+                <div class="card-header bg-dark" id="headingOne">
+                    <h2 class="mb-0">
+                        <button class="btn text-light btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne-@index" aria-expanded="true" aria-controls="collapseOne">
+                            <i class="fas fa-briefcase mr-2"></i>@item.Category.Name
+                        </button>
+                    </h2>
+                </div>
+
+                <div id="collapseOne-@index" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img src="~/img/workarea-cover/@item.Picture" class="w-100 rounded" style="max-height: 20rem" alt="@item.Category.Name" />
+                            </div>
+                            <div class="col-md-6 pt-3"> @Html.Raw(item.Description)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            $("#collapseOne-1").addClass("show");
+
+            var wid = $(window).width();
+            if (wid > 489 && wid < 992) {
+                $(".breadcrumb").removeClass("w-25 w-100").addClass("w-50");
+            } else if (wid < 489) {
+                $(".breadcrumb").removeClass("w-25").addClass("w-100");
+            }
+
+            $(window).resize(function () {
+                $(".jumbotron").each(function (i, e) {
+                    e = $(e);
+                    if (e.width() > 489 && e.width() < 992) {
+                        $(".breadcrumb").removeClass("w-25 w-100").addClass("w-50");
+                    } else if (e.width() >= 992 ) {
+                        $(".breadcrumb").removeClass("w-50 w-100").addClass("w-25");
+                    } else if (e.width()< 489) {
+                        $(".breadcrumb").removeClass("w-50").addClass("w-100");
+                    }
+                });
+            });
+        });
+
+    </script>
+}
