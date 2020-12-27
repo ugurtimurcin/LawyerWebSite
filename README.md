@@ -1,5 +1,5 @@
 
-I am glad  to announced my first project with you all. I've been learnt programming for one year. Since I October, I was able to built, my  first project, 
+I am glad  to announced my first project with you all. I've been learnt programming for one year. Since October, I was able to built my  first project, 
 which is a dynamic website for lawyers with what i've learnt until now. I used .Net Core MVC for backend. I built a dashbord which user can share write and 
 share articles dynamiclly, also category can be builded so articles can be categorized. Also, workarea can be builded and shared with website guests. 
 
