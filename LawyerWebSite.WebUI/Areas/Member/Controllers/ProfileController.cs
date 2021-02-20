@@ -1,5 +1,7 @@
 ﻿using LawyerWebSite.Entities.Concretes;
-using LawyerWebSite.WebUI.Areas.Admin.Models;
+using LawyerWebSite.Entities.Concretes.DTOs;
+using LawyerWebSite.Entities.Concretes.Entities;
+using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -23,27 +25,17 @@ namespace LawyerWebSite.WebUI.Areas.Member.Controllers
         {
             TempData["Active"] = "profile";
             var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            var model = new AppUserEditViewModel()
-            {
-                Email = user.Email,
-                FirstName = user.FirstName,
-                LastName = user.LastName,
-                UserName = user.UserName
-            };
-            return View(model);
+            
+            return View(user.Adapt<AppUserEditDto>());
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(AppUserEditViewModel model)
+        public async Task<IActionResult> Index(AppUserEditDto model)
         {
             var user = await _userManager.FindByEmailAsync(model.Email);
             if (ModelState.IsValid)
             {
-                user.FirstName = model.FirstName;
-                user.LastName = model.LastName;
-                user.Email = model.Email;
-
-                await _userManager.UpdateAsync(user);
+                await _userManager.UpdateAsync(user.Adapt<AppUser>());
                 TempData["Success"] = "Bilgileriniz <strong>başarılı</strong> bir şekilde güncellenmiştir."; 
                 return View();
             }
@@ -56,7 +48,7 @@ namespace LawyerWebSite.WebUI.Areas.Member.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpdatePassword(AppUserUpdatePasswordModel model)
+        public async Task<IActionResult> UpdatePassword(AppUserUpdatePasswordDto model)
         {
             if (ModelState.IsValid)
             {

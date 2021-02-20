@@ -1,8 +1,10 @@
 ﻿using LawyerWebSite.Business.Interfaces;
 using LawyerWebSite.DataAccess.Concretes.EntityFrameworkCore.Context;
 using LawyerWebSite.Entities.Concretes;
-using LawyerWebSite.WebUI.Areas.Admin.Models;
+using LawyerWebSite.Entities.Concretes.DTOs;
+using LawyerWebSite.Entities.Concretes.Entities;
 using LawyerWebSite.WebUI.Extensions;
+using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -29,36 +31,24 @@ namespace LawyerWebSite.WebUI.Areas.Admin.Controllers
             _categoryService = categoryService;
             _context = context;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             TempData["Active"] = "article";
             ViewBag.Title = "Makaleler";
-            var articles = _articleService.GetAll();
-            var articleModel = new List<ArticleListViewModel>();
-            foreach (var article in articles)
-            {
-                var model = new ArticleListViewModel()
-                {
-                    Id = article.Id,
-                    Title = article.Title,
-                    Content = article.Content,
-                    DateTime = article.DateTime,
-                    Picture = article.Picture
-                };
-                articleModel.Add(model);
-            }
-            return View(articleModel);
+            var articles = await _articleService.GetAllAsync();
+
+            return View(articles.Adapt<List<ArticleListDto>>());
         }
-        public IActionResult AddArticle()
+        public async Task<IActionResult> AddArticle()
         {
             TempData["Active"] = "article";
             ViewBag.Title = "Makale Ekle";
-            ViewBag.Categories = new SelectList(_categoryService.GetAll(), "Id", "Name");
+            ViewBag.Categories = new SelectList(await _categoryService.GetAllAsync(), "Id", "Name");
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddArticle(ArticleAddViewModel model, IFormFile pic)
+        public async Task<IActionResult> AddArticle(ArticleAddDto model, IFormFile pic)
         {
             if (ModelState.IsValid)
             {
@@ -90,33 +80,25 @@ namespace LawyerWebSite.WebUI.Areas.Admin.Controllers
                     ViewBag.TitleExist = titleConv.TitleToPascalCase(model.Title);
                     return View(model);
                 }
-                _articleService.Create(article);
+                await _articleService.AddAsync(article);
                 return RedirectToAction("Index", "Article", new { area = "Admin" });
 
             }
             return View(model);
         }
-        public IActionResult EditArticle(int id)
+        public async Task<IActionResult> EditArticle(int id)
         {
             TempData["Active"] = "article";
             ViewBag.Title = "Makale Düzenle";
-            ViewBag.Categories = new SelectList(_categoryService.GetAll(), "Id", "Name");
-            var article = _articleService.GetById(id);
-            var model = new ArticleEditViewModel()
-            {
-                Id = article.Id,
-                Title = article.Title,
-                Content = article.Content,
-                CategoryId = article.CategoryId,
-                Picture = article.Picture
-            };
-            return View(model);
+            ViewBag.Categories = new SelectList(await _categoryService.GetAllAsync(), "Id", "Name");
+            var article = await _articleService.GetByIdAsync(id);
+            return View(article.Adapt<ArticleEditDto>());
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditArticle(ArticleEditViewModel model, IFormFile pic)
+        public async Task<IActionResult> EditArticle(ArticleEditDto model, IFormFile pic)
         {
-            var article = _articleService.GetById(model.Id);
+            var article = await _articleService.GetByIdAsync(model.Id);
             if (ModelState.IsValid)
             {
                 var titleConv = new TitleConverter();
@@ -138,7 +120,7 @@ namespace LawyerWebSite.WebUI.Areas.Admin.Controllers
                 article.Content = model.Content.Replace("&nbsp;", " ");
                 article.Url = urlConv.StringReplace(model.Title);
                 article.CategoryId = model.CategoryId;
-                _articleService.Update(article);
+                await _articleService.UpdateAsync(article);
 
                 return RedirectToAction("Index", "Article", new { area = "Admin" });
             }
@@ -146,9 +128,9 @@ namespace LawyerWebSite.WebUI.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult DeleteArticle(int id)
+        public async Task<IActionResult> DeleteArticle(int id)
         {
-            _articleService.Delete(new Article { Id = id });
+            await _articleService.DeleteAsync(new Article { Id = id });
             return Json(null);
         }
     }

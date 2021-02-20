@@ -1,9 +1,11 @@
 ﻿using LawyerWebSite.Business.Interfaces;
 using LawyerWebSite.DataAccess.Interfaces;
 using LawyerWebSite.Entities.Concretes;
+using LawyerWebSite.Entities.Concretes.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace LawyerWebSite.Business.Concretes
 {
@@ -14,39 +16,39 @@ namespace LawyerWebSite.Business.Concretes
         {
             _articleDal = articleDal;
         }
-        public void Create(Article entity)
+        public async Task AddAsync(Article entity)
         {
-            _articleDal.Create(entity);
+            await _articleDal.AddAsync(entity);
         }
 
-        public void Delete(Article entity)
+        public async Task DeleteAsync(Article entity)
         {
-            _articleDal.Delete(entity);
+            await _articleDal.DeleteAsync(entity);
         }
 
-        public List<Article> GetAll()
+        public async Task<List<Article>> GetAllAsync()
         {
-            return _articleDal.GetAll();
+            return await _articleDal.GetAllAsync();
         }
 
-        public List<Article> GetArticlesTop6()
+        public async Task<List<Article>> GetArticlesTop6Async()
         {
-            return _articleDal.GetArticlesTop6();
+            return await _articleDal.GetArticlesTop6Async();
         }
 
-        public Article GetArticleWithCategoryByUrl(string url)
+        public async Task<Article> GetArticleWithCategoryByUrlAsync(string url)
         {
-            return _articleDal.GetArticleWithCategoryByUrl(url);
+            return await _articleDal.GetArticleWithCategoryByUrlAsync(url);
         }
 
-        public Article GetById(int id)
+        public async Task<Article> GetByIdAsync(int id)
         {
-            return _articleDal.GetById(id);
+            return await _articleDal.GetByIdAsync(id);
         }
 
-        public void Update(Article entity)
+        public async Task UpdateAsync(Article entity)
         {
-            _articleDal.Update(entity);
+            await _articleDal.UpdateAsync(entity);
         }
     }
 }

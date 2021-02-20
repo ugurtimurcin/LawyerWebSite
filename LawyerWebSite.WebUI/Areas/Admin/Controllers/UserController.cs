@@ -1,6 +1,7 @@
 ﻿using LawyerWebSite.Business.Interfaces;
 using LawyerWebSite.Entities.Concretes;
-using LawyerWebSite.WebUI.Areas.Admin.Models;
+using LawyerWebSite.Entities.Concretes.DTOs;
+using LawyerWebSite.Entities.Concretes.Entities;
 using LawyerWebSite.WebUI.EmailService;
 using LawyerWebSite.WebUI.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -33,10 +34,10 @@ namespace LawyerWebSite.WebUI.Areas.Admin.Controllers
             TempData["Active"] = "user";
             ViewBag.Title = "Kişiler";
             var users = _userService.GetUsersNonAdmin();
-            var model = new List<AppUserListViewModel>();
+            var model = new List<AppUserListDto>();
             foreach (var user in users)
             {
-                var userModel = new AppUserListViewModel()
+                var userModel = new AppUserListDto()
                 {
                     Id = user.Id,
                     FirstName = user.FirstName,
@@ -58,7 +59,7 @@ namespace LawyerWebSite.WebUI.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(AppUserRegisterModel model)
+        public async Task<IActionResult> Register(AppUserRegisterDto model)
         {
             if (ModelState.IsValid)
             {

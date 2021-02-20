@@ -1,11 +1,11 @@
-﻿using LawyerWebSite.Entities.Interfaces;
+﻿using LawyerWebSite.Core.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace LawyerWebSite.Entities.Concretes
+namespace LawyerWebSite.Entities.Concretes.Entities
 {
-    public class WokrArea: ITable
+    public class WokrArea: IEntity
     {
         public int Id { get; set; }
         public string Desciption { get; set; }

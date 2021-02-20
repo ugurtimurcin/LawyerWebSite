@@ -1,5 +1,6 @@
 ﻿using LawyerWebSite.Business.Interfaces;
-using LawyerWebSite.WebUI.Areas.Admin.Models;
+using LawyerWebSite.Entities.Concretes.DTOs;
+using Mapster;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -16,24 +17,14 @@ namespace LawyerWebSite.WebUI.Controllers
             _workAreaService = workAreaService;
         }
         [Route("calisma-alanlari")]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             ViewBag.Title = "Çalışma Alanları";
             TempData["Active"] = "workareas";
-            var model = new List<WorkAreaListViewModel>();
-            var workareas = _workAreaService.GetWokrAreasWithCategory();
-            foreach (var item in workareas)
-            {
-                var mdl = new WorkAreaListViewModel()
-                {
-                    Category = item.Category,
-                    Description = item.Desciption,
-                    Picture = item.Picture
-                };
 
-                model.Add(mdl);
-            }
-            return View(model);
+            var workareas = await _workAreaService.GetWokrAreasWithCategoryAsync();
+            
+            return View(workareas.Adapt<List<WorkAreaListViewDto>>());
         }
     }
 }

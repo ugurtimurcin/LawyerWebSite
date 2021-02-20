@@ -1,5 +1,6 @@
 ﻿using LawyerWebSite.DataAccess.Concretes.EntityFrameworkCore.Mapping;
 using LawyerWebSite.Entities.Concretes;
+using LawyerWebSite.Entities.Concretes.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;

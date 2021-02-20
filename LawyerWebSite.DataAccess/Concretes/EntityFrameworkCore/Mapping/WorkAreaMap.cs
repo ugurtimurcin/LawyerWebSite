@@ -1,4 +1,5 @@
 ﻿using LawyerWebSite.Entities.Concretes;
+using LawyerWebSite.Entities.Concretes.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace LawyerWebSite.Entities.Interfaces
+namespace LawyerWebSite.Core.Entities
 {
-    public interface ITable
+    public interface IEntity
     {
     }
 }

@@ -1,7 +1,7 @@
 ﻿using LawyerWebSite.Business.Interfaces;
 using LawyerWebSite.DataAccess.Concretes.EntityFrameworkCore.Context;
 using LawyerWebSite.Entities.Concretes;
-using LawyerWebSite.WebUI.Areas.Admin.Models;
+using LawyerWebSite.Entities.Concretes.DTOs;
 using LawyerWebSite.WebUI.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -45,11 +45,11 @@ namespace LawyerWebSite.WebUI.Areas.Member.Controllers
         {
             TempData["Active"] = "category";
             ViewBag.Title = "Kategori Ekle";
-            return View(new CategoryAddViewModel());
+            return View(new CategoryAddDto());
         }
 
         [HttpPost]
-        public IActionResult AddCategory(CategoryAddViewModel model)
+        public IActionResult AddCategory(CategoryAddDto model)
         {
             if (ModelState.IsValid)
             {

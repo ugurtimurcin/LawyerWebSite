@@ -1,8 +1,6 @@
-﻿using LawyerWebSite.Entities.Concretes;
+﻿using LawyerWebSite.Entities.Concretes.Entities;
 using Microsoft.AspNetCore.Identity;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace LawyerWebSite.WebUI

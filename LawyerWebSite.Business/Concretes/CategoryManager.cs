@@ -1,9 +1,11 @@
 ﻿using LawyerWebSite.Business.Interfaces;
 using LawyerWebSite.DataAccess.Interfaces;
 using LawyerWebSite.Entities.Concretes;
+using LawyerWebSite.Entities.Concretes.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace LawyerWebSite.Business.Concretes
 {
@@ -14,49 +16,49 @@ namespace LawyerWebSite.Business.Concretes
         {
             _categoryDal = categoryDal;
         }
-        public void Create(Category entity)
+        public async Task AddAsync(Category entity)
         {
-            _categoryDal.Create(entity);
+            await _categoryDal.AddAsync(entity);
         }
 
-        public void Delete(Category entity)
+        public async Task DeleteAsync(Category entity)
         {
-            _categoryDal.Delete(entity);
+            await _categoryDal.DeleteAsync(entity);
         }
 
-        public List<Category> GetAll()
+        public async Task<List<Category>> GetAllAsync()
         {
-            return _categoryDal.GetAll();
+            return await _categoryDal.GetAllAsync();
         }
 
-        public Category GetById(int id)
+        public async Task<Category> GetByIdAsync(int id)
         {
-            return _categoryDal.GetById(id);
+            return await _categoryDal.GetByIdAsync(id);
         }
 
-        public List<Category> GetCategoriesWithNotSelectedWorkArea()
+        public async Task<List<Category>> GetCategoriesWithNotSelectedWorkAreaAsync()
         {
-            return _categoryDal.GetCategoriesWithNotSelectedWorkArea();
+            return await _categoryDal.GetCategoriesWithNotSelectedWorkAreaAsync();
         }
 
-        public List<Category> GetCategoriesWithWorkArea()
+        public async Task<List<Category>> GetCategoriesWithWorkAreaAsync()
         {
-            return _categoryDal.GetCategoriesWithWorkArea();
+            return await _categoryDal.GetCategoriesWithWorkAreaAsync();
         }
 
-        public Category GetCategoryWithArticlesById(int id)
+        public async Task<Category> GetCategoryWithArticlesByIdAsync(int id)
         {
-            return _categoryDal.GetCategoryWithArticlesById(id);
+            return await _categoryDal.GetCategoryWithArticlesByIdAsync(id);
         }
 
-        public Category GetCategoryWithArticlesByUrl(string url)
+        public async Task<Category> GetCategoryWithArticlesByUrlAsync(string url)
         {
-            return _categoryDal.GetCategoryWithArticlesByUrl(url);
+            return await _categoryDal.GetCategoryWithArticlesByUrlAsync(url);
         }
 
-        public void Update(Category entity)
+        public async Task UpdateAsync(Category entity)
         {
-            _categoryDal.Update(entity);
+            await _categoryDal.UpdateAsync(entity);
         }
     }
 }

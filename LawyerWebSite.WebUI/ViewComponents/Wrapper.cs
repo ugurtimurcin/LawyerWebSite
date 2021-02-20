@@ -1,5 +1,5 @@
 ﻿using LawyerWebSite.Business.Interfaces;
-using LawyerWebSite.WebUI.Areas.Admin.Models;
+using LawyerWebSite.Entities.Concretes.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -19,11 +19,11 @@ namespace LawyerWebSite.WebUI.ViewComponents
         }
         public IViewComponentResult Invoke()
         {
-            var articlesModel = new List<ArticleListViewModel>();
+            var articlesModel = new List<ArticleListDto>();
             var articles = _articleservice.GetArticlesTop6();
             foreach (var item in articles)
             {
-                var articleMdl = new ArticleListViewModel()
+                var articleMdl = new ArticleListDto()
                 {
                     Id = item.Id,
                     Title = item.Title,
@@ -36,11 +36,11 @@ namespace LawyerWebSite.WebUI.ViewComponents
             }
             ViewBag.Articles = articlesModel;
 
-            var workareasModel = new List<WorkAreaListViewModel>();
+            var workareasModel = new List<WorkAreaListViewDto>();
             var workareas = _workAreaService.GetWokrAreasWithCategory();
             foreach (var item in workareas)
             {
-                var workareaMdl = new WorkAreaListViewModel()
+                var workareaMdl = new WorkAreaListViewDto()
                 {
                     Category = item.Category,
                     Description = item.Desciption,

@@ -1,11 +1,12 @@
-﻿using System;
+﻿using LawyerWebSite.Core.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LawyerWebSite.WebUI.Areas.Admin.Models
+namespace LawyerWebSite.Entities.Concretes.DTOs
 {
-    public class CategoryListViewModel
+    public class CategoryListDto : IDto
     {
         public int Id { get; set; }
         public string Name { get; set; }

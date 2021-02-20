@@ -1,8 +1,10 @@
 ﻿using LawyerWebSite.Business.Interfaces;
 using LawyerWebSite.DataAccess.Concretes.EntityFrameworkCore.Context;
 using LawyerWebSite.Entities.Concretes;
-using LawyerWebSite.WebUI.Areas.Admin.Models;
+using LawyerWebSite.Entities.Concretes.DTOs;
+using LawyerWebSite.Entities.Concretes.Entities;
 using LawyerWebSite.WebUI.Extensions;
+using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -23,33 +25,25 @@ namespace LawyerWebSite.WebUI.Areas.Admin.Controllers
             _categoryService = categoryService;
             _context = context;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             TempData["Active"] = "category";
             ViewBag.Title = "Kategoriler";
-            var categories = _categoryService.GetAll();
-            var categoryModel = new List<CategoryListViewModel>();
-            foreach (var category in categories)
-            {
-                var model = new CategoryListViewModel()
-                {
-                    Id = category.Id,
-                    Name = category.Name
-                };
-                categoryModel.Add(model);
-            }
-            return View(categoryModel);
+
+            var categories = await _categoryService.GetAllAsync();
+
+            return View(categories.Adapt<List<CategoryListDto>>);
         }
 
         public IActionResult AddCategory()
         {
             TempData["Active"] = "category";
             ViewBag.Title = "Kategori Ekle";
-            return View(new CategoryAddViewModel());
+            return View();
         }
 
         [HttpPost]
-        public IActionResult AddCategory(CategoryAddViewModel model)
+        public async Task<IActionResult> AddCategory(CategoryAddDto model)
         {
             if (ModelState.IsValid)
             {
@@ -67,40 +61,34 @@ namespace LawyerWebSite.WebUI.Areas.Admin.Controllers
                     return View(model);
                 }
 
-                _categoryService.Create(category);
+                await _categoryService.AddAsync(category);
                 return RedirectToAction("Index", "Category", new { area = "Admin" });
 
             }
             return View(model);
         }
 
-        public IActionResult EditCategory(int id)
+        public async Task<IActionResult> EditCategory(int id)
         {
             TempData["Active"] = "category";
             ViewBag.Title = "Kategori Düzenle";
-            var category = _categoryService.GetById(id);
-            var model = new CategoryEditViewModel()
-            {
-                Id = category.Id,
-                Name = category.Name,
-                Url = category.Url
-            };
+            var category = await _categoryService.GetByIdAsync(id);
 
-            return View(model);
+            return View(category.Adapt<CategoryEditDto>());
         }
 
         [HttpPost]
-        public IActionResult EditCategory(CategoryEditViewModel model)
+        public async Task<IActionResult> EditCategory(CategoryEditDto model)
         {
             if (ModelState.IsValid)
             {
                 var convertor = new UrlConverter();
                 var titleConvertor = new TitleConverter();
-                var category = _categoryService.GetById(model.Id);
+                var category = await _categoryService.GetByIdAsync(model.Id);
                 category.Name = titleConvertor.TitleToPascalCase(model.Name);
                 category.Url = convertor.StringReplace(model.Name);
 
-                _categoryService.Update(category);
+                await _categoryService.UpdateAsync(category);
 
                 return RedirectToAction("Index", "Category", new { area = "Admin" });
             }
@@ -108,9 +96,9 @@ namespace LawyerWebSite.WebUI.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult DeleteCategory(int id)
+        public async Task<IActionResult> DeleteCategory(int id)
         {
-            _categoryService.Delete(new Category { Id = id });
+            await _categoryService.DeleteAsync(new Category { Id = id });
             return Json(null);
         }
     }

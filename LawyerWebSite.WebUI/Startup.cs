@@ -5,6 +5,7 @@ using LawyerWebSite.DataAccess.Concretes.EntityFrameworkCore.Context;
 using LawyerWebSite.DataAccess.Concretes.EntityFrameworkCore.Repositories;
 using LawyerWebSite.DataAccess.Interfaces;
 using LawyerWebSite.Entities.Concretes;
+using LawyerWebSite.Entities.Concretes.Entities;
 using LawyerWebSite.WebUI.ConfigureServicesCollection;
 using LawyerWebSite.WebUI.EmailService;
 using Microsoft.AspNetCore.Builder;

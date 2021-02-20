@@ -1,6 +1,6 @@
 ﻿using LawyerWebSite.Business.Interfaces;
 using LawyerWebSite.Entities.Concretes;
-using LawyerWebSite.WebUI.Areas.Admin.Models;
+using LawyerWebSite.Entities.Concretes.DTOs;
 using LawyerWebSite.WebUI.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
@@ -33,10 +33,10 @@ namespace LawyerWebSite.WebUI.Areas.Member.Controllers
             ViewBag.EmptyWorkAreas = _categoryService.GetCategoriesWithNotSelectedWorkArea();
             ViewBag.EmptyWorkAreasCount = _categoryService.GetCategoriesWithNotSelectedWorkArea().Count;
             var workareas = _workAreaService.GetWokrAreasWithCategory();
-            var model = new List<WorkAreaListViewModel>();
+            var model = new List<WorkAreaListViewDto>();
             foreach (var item in workareas)
             {
-                var mdl = new WorkAreaListViewModel()
+                var mdl = new WorkAreaListViewDto()
                 {
                     Id = item.Id,
                     Description = item.Desciption,
@@ -57,7 +57,7 @@ namespace LawyerWebSite.WebUI.Areas.Member.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddWorkArea(WorkAreaAddViewModel model ,IFormFile pic)
+        public async Task<IActionResult> AddWorkArea(WorkAreaAddDto model ,IFormFile pic)
         {
             if (ModelState.IsValid)
             {

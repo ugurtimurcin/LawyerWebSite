@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace LawyerWebSite.Entities.Concretes
+namespace LawyerWebSite.Entities.Concretes.Entities
 {
     public class AppUser: IdentityUser<int>
     {

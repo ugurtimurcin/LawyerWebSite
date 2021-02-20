@@ -1,12 +1,13 @@
-﻿using LawyerWebSite.Entities.Concretes;
+﻿using LawyerWebSite.Core.Entities;
+using LawyerWebSite.Entities.Concretes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace LawyerWebSite.WebUI.Areas.Admin.Models
+namespace LawyerWebSite.Entities.Concretes.DTOs
 {
-    public class ArticleListViewModel
+    public class ArticleListDto : IDto
     {
         public int Id { get; set; }
         public string Title { get; set; }

@@ -1,9 +1,11 @@
 ﻿using LawyerWebSite.Business.Interfaces;
 using LawyerWebSite.DataAccess.Interfaces;
 using LawyerWebSite.Entities.Concretes;
+using LawyerWebSite.Entities.Concretes.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace LawyerWebSite.Business.Concretes
 {
@@ -14,34 +16,34 @@ namespace LawyerWebSite.Business.Concretes
         {
             _workArea = workArea;
         }
-        public void Create(WokrArea entity)
+        public async Task AddAsync(WokrArea entity)
         {
-            _workArea.Create(entity);
+            await _workArea.AddAsync(entity);
         }
 
-        public void Delete(WokrArea entity)
+        public async Task DeleteAsync(WokrArea entity)
         {
-            _workArea.Delete(entity);
+            await _workArea.DeleteAsync(entity);
         }
 
-        public List<WokrArea> GetAll()
+        public async Task<List<WokrArea>> GetAllAsync()
         {
-            return _workArea.GetAll();
+            return await _workArea.GetAllAsync();
         }
 
-        public WokrArea GetById(int id)
+        public async Task<WokrArea> GetByIdAsync(int id)
         {
-            return _workArea.GetById(id);
+            return await _workArea.GetByIdAsync(id);
         }
 
-        public List<WokrArea> GetWokrAreasWithCategory()
+        public async Task<List<WokrArea>> GetWokrAreasWithCategoryAsync()
         {
-            return _workArea.GetWokrAreasWithCategory();
+            return await _workArea.GetWokrAreasWithCategoryAsync();
         }
 
-        public void Update(WokrArea entity)
+        public async Task UpdateAsync(WokrArea entity)
         {
-            _workArea.Update(entity);
+            await _workArea.UpdateAsync(entity);
         }
     }
 }

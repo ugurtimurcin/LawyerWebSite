@@ -1,5 +1,6 @@
 ﻿using LawyerWebSite.Business.Interfaces;
-using LawyerWebSite.WebUI.Areas.Admin.Models;
+using LawyerWebSite.Entities.Concretes.DTOs;
+using Mapster;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -19,48 +20,29 @@ namespace LawyerWebSite.WebUI.Controllers
         }
 
         [Route("/makaleler/")]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             ViewBag.Title = "Makaleler";
             TempData["Active"] = "articles";
-            var categories = _categoryService.GetAll();
-            var models = new List<CategoryListViewModel>();
-            foreach (var category in categories)
-            {
-                var model = new CategoryListViewModel()
-                {
-                    Id = category.Id,
-                    Url = category.Url,
-                    Name = category.Name
-                };
-                models.Add(model);
-            }
-            return View(models);
+            var categories = await _categoryService.GetAllAsync();
+            return View(categories.Adapt<List<CategoryListDto>>());
         }
         [Route("/makaleler/{url}")]
-        public IActionResult Articles(string url)
+        public async Task<IActionResult> Articles(string url)
         {
             TempData["Active"] = "articles";
-            var articles = _categoryService.GetCategoryWithArticlesByUrl(url);
-            var model = new CategoryAllListViewModel()
-            {
-                Id = articles.Id,
-                Name = articles.Name,
-                Articles = articles.Articles
-            };
-
-            ViewBag.Title = model.Name;
-            return View(model);
+            var articles = await _categoryService.GetCategoryWithArticlesByUrlAsync(url);
+            return View(articles.Adapt<CategoryAllListDto>());
         }
 
         [Route("/makaleler/makale/{url}")]
-        public IActionResult Detail(string url)
+        public async Task<IActionResult> Detail(string url)
         {
             TempData["Active"] = "articles";
-            var article = _articleService.GetArticleWithCategoryByUrl(url);
+            var article = await _articleService.GetArticleWithCategoryByUrlAsync(url);
             ViewBag.Title = article.Title.ToString();
-            ViewBag.Category = _categoryService.GetById(article.CategoryId);
-            var model = new ArticleListViewModel()
+            ViewBag.Category = _categoryService.GetByIdAsync(article.CategoryId);
+            var model = new ArticleListDto()
             {
                 Id = article.Id,
                 Title = article.Title,
@@ -68,7 +50,7 @@ namespace LawyerWebSite.WebUI.Controllers
                 DateTime = article.DateTime,
                 Picture = article.Picture
             };
-            return View(model);
+            return View(article.Adapt<ArticleListDto>());
         }
     }
 }

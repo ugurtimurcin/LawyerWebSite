@@ -1,5 +1,6 @@
 ﻿using LawyerWebSite.Entities.Concretes;
-using LawyerWebSite.WebUI.Areas.Admin.Models;
+using LawyerWebSite.Entities.Concretes.DTOs;
+using LawyerWebSite.Entities.Concretes.Entities;
 using LawyerWebSite.WebUI.EmailService;
 using LawyerWebSite.WebUI.Models;
 using Microsoft.AspNetCore.Identity;
@@ -30,7 +31,7 @@ namespace LawyerWebSite.WebUI.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(AppUserLoginViewModel model)
+        public async Task<IActionResult> Index(AppUserLoginDto model)
         {
             if (ModelState.IsValid)
             {
