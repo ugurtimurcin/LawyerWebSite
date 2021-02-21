@@ -25,15 +25,15 @@ namespace LawyerWebSite.WebUI.Areas.Admin.Controllers
             _workAreaService = workAreaService;
             _appUserService = appUserService;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             TempData["Active"] = "home";
             ViewBag.Title = "Anasayfa";
 
-            ViewBag.TotalCategory = _categoryService.GetAll().Count;
-            ViewBag.TotalArticle = _articleService.GetAll().Count;
-            ViewBag.TotalWorkArea = _workAreaService.GetWokrAreasWithCategory().Count;
-            ViewBag.TotalNotAssigntWorkArea = _categoryService.GetCategoriesWithNotSelectedWorkArea().Count;
+            ViewBag.TotalCategory = (await _categoryService.GetAllAsync()).Count;
+            ViewBag.TotalArticle = (await _articleService.GetAllAsync()).Count;
+            ViewBag.TotalWorkArea = (await _workAreaService.GetWokrAreasWithCategoryAsync()).Count;
+            ViewBag.TotalNotAssigntWorkArea = (await _categoryService.GetCategoriesWithNotSelectedWorkAreaAsync()).Count;
             ViewBag.TotalUser = _appUserService.GetUsersNonAdmin().Count;
 
             return View();

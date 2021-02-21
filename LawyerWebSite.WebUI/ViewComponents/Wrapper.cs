@@ -1,5 +1,6 @@
 ﻿using LawyerWebSite.Business.Interfaces;
 using LawyerWebSite.Entities.Concretes.DTOs;
+using Mapster;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -19,37 +20,11 @@ namespace LawyerWebSite.WebUI.ViewComponents
         }
         public IViewComponentResult Invoke()
         {
-            var articlesModel = new List<ArticleListDto>();
-            var articles = _articleservice.GetArticlesTop6();
-            foreach (var item in articles)
-            {
-                var articleMdl = new ArticleListDto()
-                {
-                    Id = item.Id,
-                    Title = item.Title,
-                    Content = item.Content,
-                    DateTime = item.DateTime,
-                    Picture = item.Picture,
-                    Url = item.Url
-                };
-                articlesModel.Add(articleMdl);
-            }
-            ViewBag.Articles = articlesModel;
+            var articles = _articleservice.GetArticlesTop6Async().Result;
+            ViewBag.Articles = articles.Adapt<List<ArticleListDto>>();
 
-            var workareasModel = new List<WorkAreaListViewDto>();
-            var workareas = _workAreaService.GetWokrAreasWithCategory();
-            foreach (var item in workareas)
-            {
-                var workareaMdl = new WorkAreaListViewDto()
-                {
-                    Category = item.Category,
-                    Description = item.Desciption,
-                    Picture = item.Picture
-                };
-
-                workareasModel.Add(workareaMdl);
-            }
-            ViewBag.WorkAreas = workareasModel;
+            var workareas = _workAreaService.GetWokrAreasWithCategoryAsync().Result;
+            ViewBag.WorkAreas = workareas.Adapt<List<WorkAreaListViewDto>>();
 
             return View();
         }

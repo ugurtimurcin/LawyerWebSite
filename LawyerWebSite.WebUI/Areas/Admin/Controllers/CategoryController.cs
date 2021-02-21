@@ -32,7 +32,7 @@ namespace LawyerWebSite.WebUI.Areas.Admin.Controllers
 
             var categories = await _categoryService.GetAllAsync();
 
-            return View(categories.Adapt<List<CategoryListDto>>);
+            return View(categories.Adapt<List<CategoryListDto>>());
         }
 
         public IActionResult AddCategory()

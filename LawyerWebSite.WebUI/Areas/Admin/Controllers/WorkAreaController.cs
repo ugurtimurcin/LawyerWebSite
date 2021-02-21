@@ -1,7 +1,9 @@
 ﻿using LawyerWebSite.Business.Interfaces;
 using LawyerWebSite.Entities.Concretes;
 using LawyerWebSite.Entities.Concretes.DTOs;
+using LawyerWebSite.Entities.Concretes.Entities;
 using LawyerWebSite.WebUI.Extensions;
+using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -27,32 +29,21 @@ namespace LawyerWebSite.WebUI.Areas.Admin.Controllers
             _workAreaService = workAreaService;
 
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             TempData["Active"] = "workarea";
-            ViewBag.EmptyWorkAreas = _categoryService.GetCategoriesWithNotSelectedWorkArea();
-            ViewBag.EmptyWorkAreasCount = _categoryService.GetCategoriesWithNotSelectedWorkArea().Count;
-            var workareas = _workAreaService.GetWokrAreasWithCategory();
-            var model = new List<WorkAreaListViewDto>();
-            foreach (var item in workareas)
-            {
-                var mdl = new WorkAreaListViewDto()
-                {
-                    Id = item.Id,
-                    Description = item.Desciption,
-                    Category = item.Category,
-                    Picture = item.Picture
-                };
-                model.Add(mdl);
-            }
-            return View(model);
+            ViewBag.EmptyWorkAreas = await _categoryService.GetCategoriesWithNotSelectedWorkAreaAsync();
+            ViewBag.EmptyWorkAreasCount = (await _categoryService.GetCategoriesWithNotSelectedWorkAreaAsync()).Count;
+
+            var workareas = await _workAreaService.GetWokrAreasWithCategoryAsync();
+            return View(workareas.Adapt<List<WorkAreaListViewDto>>());
         }
 
 
-        public IActionResult AddWorkArea()
+        public async Task<IActionResult> AddWorkArea()
         {
             TempData["Active"] = "workarea";
-            ViewBag.Categories = new SelectList(_categoryService.GetCategoriesWithNotSelectedWorkArea(), "Id", "Name");
+            ViewBag.Categories = new SelectList(await _categoryService.GetCategoriesWithNotSelectedWorkAreaAsync(), "Id", "Name");
             return View();
         }
 
@@ -64,7 +55,7 @@ namespace LawyerWebSite.WebUI.Areas.Admin.Controllers
                 if (pic != null)
                 {
                     var extension = Path.GetExtension(pic.FileName);
-                    var name = _categoryService.GetById(model.CategoryId).Url + extension;
+                    var name = (await _categoryService.GetByIdAsync(model.CategoryId)).Url + extension;
                     var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/workarea-cover/" + name);
                     using var stream = new FileStream(path, FileMode.Create);
                     await pic.CopyToAsync(stream);
@@ -78,37 +69,31 @@ namespace LawyerWebSite.WebUI.Areas.Admin.Controllers
                     CategoryId = model.CategoryId
                 };
 
-                _workAreaService.Create(workArea);
+                await _workAreaService.AddAsync(workArea);
                 return RedirectToAction("Index", "WorkArea", new { area = "Admin" });
             }
 
             return View(model);
         }
 
-        public IActionResult EditWorkArea(int id)
+        public async Task<IActionResult> EditWorkArea(int id)
         {
-            ViewBag.Categories = new SelectList(_categoryService.GetAll(), "Id", "Name");
-            var workarea = _workAreaService.GetById(id);
-            var model = new WorkAreaEditViewModel()
-            {
-                Id = workarea.Id,
-                Description = workarea.Desciption,
-                Picture = workarea.Picture,
-                CategoryId = workarea.CategoryId
-            };
-            return View(model);
+            ViewBag.Categories = new SelectList(await _categoryService.GetAllAsync(), "Id", "Name");
+            var workarea = _workAreaService.GetByIdAsync(id);
+
+            return View(workarea.Adapt<WorkAreaEditDto>());
         }
 
         [HttpPost]
         public async Task<IActionResult> EditWorkArea(WorkAreaEditDto model, IFormFile pic)
         {
-            var workarea = _workAreaService.GetById(model.Id);
+            var workarea = await _workAreaService.GetByIdAsync(model.Id);
             if (ModelState.IsValid)
             {
                 if (pic != null)
                 {
                     var extension = Path.GetExtension(pic.FileName);
-                    var picName = _categoryService.GetById(model.CategoryId).Url + extension;
+                    var picName = (await _categoryService.GetByIdAsync(model.CategoryId)).Url + extension;
                     var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/workarea-cover/" + picName);
                     using var stream = new FileStream(path, FileMode.Create);
                     await pic.CopyToAsync(stream);
@@ -121,7 +106,7 @@ namespace LawyerWebSite.WebUI.Areas.Admin.Controllers
                 workarea.Desciption = model.Description.Replace("&nbsp;", " ");
                 workarea.CategoryId = model.CategoryId;
 
-                _workAreaService.Update(workarea);
+                await _workAreaService.UpdateAsync(workarea);
                 return RedirectToAction("Index", "WorkArea", new { area = "Admin" });
             }
 
@@ -129,9 +114,9 @@ namespace LawyerWebSite.WebUI.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult DeleteWorkArea(int id)
+        public async Task<IActionResult> DeleteWorkArea(int id)
         {
-            _workAreaService.Delete(new WokrArea { Id = id });
+            await _workAreaService.DeleteAsync(new WokrArea { Id = id });
             return Json(null);
         }
     }
