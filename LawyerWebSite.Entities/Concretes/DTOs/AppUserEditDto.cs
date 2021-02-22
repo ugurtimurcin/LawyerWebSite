@@ -9,12 +9,12 @@ namespace LawyerWebSite.Entities.Concretes.DTOs
 {
     public class AppUserEditDto : IDto
     {
-        [Required(ErrorMessage ="İsminizi giriniz")]
+        //[Required(ErrorMessage ="İsminizi giriniz")]
         public string FirstName { get; set; }
-        [Required(ErrorMessage = "Soyisminizi giriniz")]
+        //[Required(ErrorMessage = "Soyisminizi giriniz")]
         public string LastName { get; set; }
         public string UserName { get; set; }
-        [Required(ErrorMessage = "E-posta adresinizi giriniz"), DataType(DataType.EmailAddress)]
+        //[Required(ErrorMessage = "E-posta adresinizi giriniz"), DataType(DataType.EmailAddress)]
         public string Email { get; set; }
     }
 }
