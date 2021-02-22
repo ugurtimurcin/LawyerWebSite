@@ -41,7 +41,7 @@ share articles dynamiclly, also category can be builded so articles can be categ
 
 ### Built With
 
-* [.Net 5](https://docs.microsoft.com/en-us/dotnet/core/dotnet-five)
+* [.Net Core](https://docs.microsoft.com/en-us/dotnet/core/dotnet-five)
 
 ### Packages
 <a href="https://github.com/MapsterMapper/Mapster">Mapster</a><br/>
