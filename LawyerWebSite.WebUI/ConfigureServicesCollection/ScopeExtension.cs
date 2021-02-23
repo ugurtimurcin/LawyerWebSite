@@ -1,9 +1,12 @@
-﻿using LawyerWebSite.Business.Concretes;
+﻿using FluentValidation;
+using LawyerWebSite.Business.Concretes;
 using LawyerWebSite.Business.Interfaces;
+using LawyerWebSite.Business.ValidationRules.FluentValdation.AppUser;
 using LawyerWebSite.DataAccess.Concretes.EntityFrameworkCore.Context;
 using LawyerWebSite.DataAccess.Concretes.EntityFrameworkCore.Repositories;
 using LawyerWebSite.DataAccess.Interfaces;
 using LawyerWebSite.Entities.Concretes;
+using LawyerWebSite.Entities.Concretes.DTOs;
 using LawyerWebSite.Entities.Concretes.Entities;
 using LawyerWebSite.WebUI.CustomValidator;
 using LawyerWebSite.WebUI.EmailService;
@@ -31,6 +34,10 @@ namespace LawyerWebSite.WebUI.ConfigureServicesCollection
             services.AddScoped<ICategoryDal, EfCategoryRepository>();
             services.AddScoped<IWorkAreaDal, EfWorkAreaRepository>();
             services.AddScoped<IAppUserDal, EfAppUserRepository>();
+
+            services.AddTransient<IValidator<AppUserEditDto>, AppUserEditValidator>();
+            services.AddTransient<IValidator<AppUserLoginDto>, AppUserLoginValidator>();
+            services.AddTransient<IValidator<AppUserRegisterDto>, AppUserRegisterValidator>();
         }
 
         public static void AddIdentityConfiguration(this IServiceCollection services)
