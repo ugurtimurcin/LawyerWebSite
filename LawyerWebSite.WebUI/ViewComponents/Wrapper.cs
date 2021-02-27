@@ -20,12 +20,26 @@ namespace LawyerWebSite.WebUI.ViewComponents
         }
         public IViewComponentResult Invoke()
         {
-            var articles = _articleservice.GetArticlesTop6Async().Result;
-            ViewBag.Articles = articles.Adapt<List<ArticleListDto>>();
 
             var workareas = _workAreaService.GetWokrAreasWithCategoryAsync().Result;
-            ViewBag.WorkAreas = workareas.Adapt<List<WorkAreaListViewDto>>();
+            var workList = workareas.Adapt<List<WorkAreaListDto>>();
+            ViewBag.WorkAreas = workList;
 
+            var articles = _articleservice.GetArticlesTop6Async().Result;
+            var list = articles.Adapt<List<ArticleListDto>>();
+            ViewBag.Articles = list;
+
+            //var workList = new List<WorkAreaListViewDto>();
+            //foreach (var item in workareas)
+            //{
+            //    var model = new WorkAreaListViewDto()
+            //    {
+            //        Category = item.Category,
+            //        Description = item.Desciption,
+            //        Picture = item.Picture,
+            //        Id = item.Id
+            //    };
+            //}
             return View();
         }
     }
