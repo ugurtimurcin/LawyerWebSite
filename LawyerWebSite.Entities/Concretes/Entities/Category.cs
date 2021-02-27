@@ -11,6 +11,6 @@ namespace LawyerWebSite.Entities.Concretes.Entities
         public string Name { get; set; }
         public string Url { get; set; }
         public List<Article> Articles { get; set; }
-        public WokrArea WokrArea { get; set; }
+        public WorkArea WorkArea { get; set; }
     }
 }
