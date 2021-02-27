@@ -1,4 +1,4 @@
-﻿@model List<WorkAreaListViewDto>
+﻿@model List<WorkAreaListDto>
 @{
     int index = 0;
 }
@@ -27,7 +27,7 @@
                 <div class="card-header bg-dark" id="headingOne">
                     <h2 class="mb-0">
                         <button class="btn text-light btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne-@index" aria-expanded="true" aria-controls="collapseOne">
-                            <i class="fas fa-briefcase mr-2"></i>@item.Category.Name
+                            <i class="fas fa-briefcase mr-2"></i>@item.CategoryName
                         </button>
                     </h2>
                 </div>
@@ -36,7 +36,7 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6">
-                                <img src="~/img/workarea-cover/@item.Picture" class="w-100 rounded" style="max-height: 20rem" alt="@item.Category.Name" />
+                                <img src="~/img/workarea-cover/@item.Picture" class="w-100 rounded" style="max-height: 20rem" alt="@item.CategoryName" />
                             </div>
                             <div class="col-md-6 pt-3"> @Html.Raw(item.Description)</div>
                         </div>

@@ -24,7 +24,7 @@ namespace LawyerWebSite.WebUI.Controllers
 
             var workareas = await _workAreaService.GetWokrAreasWithCategoryAsync();
             
-            return View(workareas.Adapt<List<WorkAreaListViewDto>>());
+            return View(workareas.Adapt<List<WorkAreaListDto>>());
         }
     }
 }

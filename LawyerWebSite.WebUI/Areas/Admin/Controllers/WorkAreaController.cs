@@ -36,7 +36,7 @@ namespace LawyerWebSite.WebUI.Areas.Admin.Controllers
             ViewBag.EmptyWorkAreasCount = (await _categoryService.GetCategoriesWithNotSelectedWorkAreaAsync()).Count;
 
             var workareas = await _workAreaService.GetWokrAreasWithCategoryAsync();
-            return View(workareas.Adapt<List<WorkAreaListViewDto>>());
+            return View(workareas.Adapt<List<WorkAreaListDto>>());
         }
 
 
@@ -62,7 +62,7 @@ namespace LawyerWebSite.WebUI.Areas.Admin.Controllers
                     model.Picture = name;
                 }
 
-                var workArea = new WokrArea()
+                var workArea = new WorkArea()
                 {
                     Desciption = model.Description.Replace("&nbsp;"," "),
                     Picture = model.Picture,
@@ -116,7 +116,7 @@ namespace LawyerWebSite.WebUI.Areas.Admin.Controllers
         [HttpGet]
         public async Task<IActionResult> DeleteWorkArea(int id)
         {
-            await _workAreaService.DeleteAsync(new WokrArea { Id = id });
+            await _workAreaService.DeleteAsync(new WorkArea { Id = id });
             return Json(null);
         }
     }
