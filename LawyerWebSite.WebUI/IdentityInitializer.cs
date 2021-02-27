@@ -1,4 +1,4 @@
-﻿using LawyerWebSite.Entities.Concretes.Entities;
+﻿using LawyerWebSite.Entities.Concrete.Entities;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Threading.Tasks;

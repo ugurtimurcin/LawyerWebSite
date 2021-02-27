@@ -1,21 +1,14 @@
-using LawyerWebSite.Business.Concretes;
 using LawyerWebSite.Business.CustomLogger;
 using LawyerWebSite.Business.Interfaces;
-using LawyerWebSite.DataAccess.Concretes.EntityFrameworkCore.Context;
-using LawyerWebSite.DataAccess.Concretes.EntityFrameworkCore.Repositories;
-using LawyerWebSite.DataAccess.Interfaces;
-using LawyerWebSite.Entities.Concretes;
-using LawyerWebSite.Entities.Concretes.Entities;
+using LawyerWebSite.DataAccess.Concrete.EntityFrameworkCore.Context;
+using LawyerWebSite.Entities.Concrete.Entities;
 using LawyerWebSite.WebUI.ConfigureServicesCollection;
-using LawyerWebSite.WebUI.EmailService;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
 
 namespace LawyerWebSite.WebUI
 {
