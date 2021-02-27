@@ -1,4 +1,4 @@
-﻿using LawyerWebSite.Entities.Concretes.Entities;
+﻿using LawyerWebSite.Entities.Concrete.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;

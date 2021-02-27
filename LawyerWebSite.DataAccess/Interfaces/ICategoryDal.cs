@@ -1,9 +1,6 @@
 ﻿using LawyerWebSite.Core.DataAccess;
-using LawyerWebSite.Entities.Concretes;
-using LawyerWebSite.Entities.Concretes.Entities;
-using System;
+using LawyerWebSite.Entities.Concrete.Entities;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace LawyerWebSite.DataAccess.Interfaces

@@ -1,8 +1,5 @@
-﻿using LawyerWebSite.Entities.Concretes;
-using LawyerWebSite.Entities.Concretes.Entities;
-using System;
+﻿using LawyerWebSite.Entities.Concrete.Entities;
 using System.Collections.Generic;
-using System.Text;
 
 namespace LawyerWebSite.Business.Interfaces
 {

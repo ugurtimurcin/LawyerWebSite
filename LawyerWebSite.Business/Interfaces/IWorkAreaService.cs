@@ -1,8 +1,8 @@
 ﻿
 using LawyerWebSite.Core.Business;
-using LawyerWebSite.Entities.Concretes;
-using LawyerWebSite.Entities.Concretes.DTOs;
-using LawyerWebSite.Entities.Concretes.Entities;
+using LawyerWebSite.Entities.Concrete;
+using LawyerWebSite.Entities.Concrete.DTOs;
+using LawyerWebSite.Entities.Concrete.Entities;
 using System;
 using System.Collections.Generic;
 using System.Text;

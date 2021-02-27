@@ -1,8 +1,5 @@
 ﻿using FluentValidation;
-using LawyerWebSite.Entities.Concretes.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using LawyerWebSite.Entities.Concrete.DTOs;
 
 namespace LawyerWebSite.Business.ValidationRules.FluentValdation.AppUser
 {

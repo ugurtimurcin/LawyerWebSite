@@ -1,13 +1,12 @@
 ﻿using FluentValidation;
-using LawyerWebSite.Business.Concretes;
+using LawyerWebSite.Business.Concrete;
 using LawyerWebSite.Business.Interfaces;
 using LawyerWebSite.Business.ValidationRules.FluentValdation.AppUser;
-using LawyerWebSite.DataAccess.Concretes.EntityFrameworkCore.Context;
-using LawyerWebSite.DataAccess.Concretes.EntityFrameworkCore.Repositories;
+using LawyerWebSite.DataAccess.Concrete.EntityFrameworkCore.Context;
+using LawyerWebSite.DataAccess.Concrete.EntityFrameworkCore.Repositories;
 using LawyerWebSite.DataAccess.Interfaces;
-using LawyerWebSite.Entities.Concretes;
-using LawyerWebSite.Entities.Concretes.DTOs;
-using LawyerWebSite.Entities.Concretes.Entities;
+using LawyerWebSite.Entities.Concrete.DTOs;
+using LawyerWebSite.Entities.Concrete.Entities;
 using LawyerWebSite.WebUI.CustomValidator;
 using LawyerWebSite.WebUI.EmailService;
 using Microsoft.AspNetCore.Http;
@@ -15,9 +14,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace LawyerWebSite.WebUI.ConfigureServicesCollection
 {

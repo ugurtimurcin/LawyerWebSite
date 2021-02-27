@@ -1,12 +1,9 @@
-﻿using LawyerWebSite.Entities.Concretes;
-using LawyerWebSite.Entities.Concretes.DTOs;
-using LawyerWebSite.Entities.Concretes.Entities;
+﻿using LawyerWebSite.Entities.Concrete.DTOs;
+using LawyerWebSite.Entities.Concrete.Entities;
 using LawyerWebSite.WebUI.EmailService;
 using LawyerWebSite.WebUI.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 

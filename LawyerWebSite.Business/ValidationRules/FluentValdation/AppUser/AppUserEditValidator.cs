@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using LawyerWebSite.Entities.Concretes.DTOs;
+using LawyerWebSite.Entities.Concrete.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;

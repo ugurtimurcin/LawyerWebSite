@@ -1,13 +1,11 @@
 ﻿using LawyerWebSite.Business.Interfaces;
-using LawyerWebSite.DataAccess.Concretes.EntityFrameworkCore.Context;
-using LawyerWebSite.Entities.Concretes;
-using LawyerWebSite.Entities.Concretes.DTOs;
-using LawyerWebSite.Entities.Concretes.Entities;
+using LawyerWebSite.DataAccess.Concrete.EntityFrameworkCore.Context;
+using LawyerWebSite.Entities.Concrete.DTOs;
+using LawyerWebSite.Entities.Concrete.Entities;
 using LawyerWebSite.WebUI.Extensions;
 using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
