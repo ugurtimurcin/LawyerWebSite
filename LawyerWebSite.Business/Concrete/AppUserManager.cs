@@ -1,4 +1,6 @@
 ﻿using LawyerWebSite.Business.Interfaces;
+using LawyerWebSite.Core.Utilities.Results.Abstract;
+using LawyerWebSite.Core.Utilities.Results.Concrete;
 using LawyerWebSite.DataAccess.Interfaces;
 using LawyerWebSite.Entities.Concrete.Entities;
 using System.Collections.Generic;
@@ -12,9 +14,9 @@ namespace LawyerWebSite.Business.Concrete
         {
             _appUser = appUser;
         }
-        public List<AppUser> GetUsersNonAdmin()
+        public IDataResult<List<AppUser>> GetUsersNonAdmin()
         {
-            return _appUser.GetUsersNonAdmin();
+            return new SuccessDataResult<List<AppUser>>(_appUser.GetUsersNonAdmin());
         }
     }
 }

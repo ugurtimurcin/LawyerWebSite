@@ -1,4 +1,6 @@
 ﻿using LawyerWebSite.Business.Interfaces;
+using LawyerWebSite.Core.Utilities.Results.Abstract;
+using LawyerWebSite.Core.Utilities.Results.Concrete;
 using LawyerWebSite.DataAccess.Interfaces;
 using LawyerWebSite.Entities.Concrete.Entities;
 using System.Collections.Generic;
@@ -13,49 +15,54 @@ namespace LawyerWebSite.Business.Concrete
         {
             _categoryDal = categoryDal;
         }
-        public async Task AddAsync(Category entity)
+
+        public async Task<IResult> AddAsync(Category entity)
         {
             await _categoryDal.AddAsync(entity);
+            return new SuccessResult();
         }
 
-        public async Task DeleteAsync(Category entity)
+        public async Task<IResult> DeleteAsync(Category entity)
         {
             await _categoryDal.DeleteAsync(entity);
+            return new SuccessResult();
         }
 
-        public async Task<List<Category>> GetAllAsync()
+        public async Task<IDataResult<List<Category>>> GetAllAsync()
         {
-            return await _categoryDal.GetAllAsync();
+            return new SuccessDataResult<List<Category>>(await _categoryDal.GetAllAsync());
         }
 
-        public async Task<Category> GetByIdAsync(int id)
+        public async Task<IDataResult<Category>> GetByIdAsync(int id)
         {
-            return await _categoryDal.GetByIdAsync(id);
+            return new SuccessDataResult<Category>(await _categoryDal.GetByIdAsync(id));
+            throw new System.NotImplementedException();
         }
 
-        public async Task<List<Category>> GetCategoriesWithNotSelectedWorkAreaAsync()
+        public async Task<IDataResult<List<Category>>> GetCategoriesWithNotSelectedWorkAreaAsync()
         {
-            return await _categoryDal.GetCategoriesWithNotSelectedWorkAreaAsync();
+            return new SuccessDataResult<List<Category>>(await _categoryDal.GetCategoriesWithNotSelectedWorkAreaAsync());
         }
 
-        public async Task<List<Category>> GetCategoriesWithWorkAreaAsync()
+        public async Task<IDataResult<List<Category>>> GetCategoriesWithWorkAreaAsync()
         {
-            return await _categoryDal.GetCategoriesWithWorkAreaAsync();
+            return new SuccessDataResult<List<Category>>(await _categoryDal.GetCategoriesWithWorkAreaAsync());
         }
 
-        public async Task<Category> GetCategoryWithArticlesByIdAsync(int id)
+        public async Task<IDataResult<Category>> GetCategoryWithArticlesByIdAsync(int id)
         {
-            return await _categoryDal.GetCategoryWithArticlesByIdAsync(id);
+            return new SuccessDataResult<Category>(await _categoryDal.GetCategoryWithArticlesByIdAsync(id));
         }
 
-        public async Task<Category> GetCategoryWithArticlesByUrlAsync(string url)
+        public async Task<IDataResult<Category>> GetCategoryWithArticlesByUrlAsync(string url)
         {
-            return await _categoryDal.GetCategoryWithArticlesByUrlAsync(url);
+            return new SuccessDataResult<Category>(await _categoryDal.GetCategoryWithArticlesByUrlAsync(url));
         }
 
-        public async Task UpdateAsync(Category entity)
+        public async Task<IResult> UpdateAsync(Category entity)
         {
             await _categoryDal.UpdateAsync(entity);
+            return new SuccessResult();
         }
     }
 }
