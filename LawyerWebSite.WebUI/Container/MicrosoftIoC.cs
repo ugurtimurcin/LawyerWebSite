@@ -1,5 +1,7 @@
-﻿using FluentValidation;
+﻿using AutoMapper;
+using FluentValidation;
 using LawyerWebSite.Business.Concrete;
+using LawyerWebSite.Business.CustomLogger;
 using LawyerWebSite.Business.Interfaces;
 using LawyerWebSite.Business.ValidationRules.FluentValdation.AppUser;
 using LawyerWebSite.DataAccess.Concrete.EntityFrameworkCore.Context;
@@ -9,6 +11,7 @@ using LawyerWebSite.Entities.Concrete.DTOs;
 using LawyerWebSite.Entities.Concrete.Entities;
 using LawyerWebSite.WebUI.CustomValidator;
 using LawyerWebSite.WebUI.EmailService;
+using LawyerWebSite.WebUI.Mapping.AutoMapperProfile;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -17,9 +20,9 @@ using System;
 
 namespace LawyerWebSite.WebUI.ConfigureServicesCollection
 {
-    public static class ScopeExtension
+    public static class MicrosoftIoC
     {
-        public static void AddScopedConfiguration(this IServiceCollection services)
+        public static void AddDependencies(this IServiceCollection services, IConfiguration _configuration)
         {
             services.AddScoped<ICategoryService, CategoryManager>();
             services.AddScoped<IArticleService, ArticleManager>();
@@ -34,19 +37,24 @@ namespace LawyerWebSite.WebUI.ConfigureServicesCollection
             services.AddTransient<IValidator<AppUserEditDto>, AppUserEditValidator>();
             services.AddTransient<IValidator<AppUserLoginDto>, AppUserLoginValidator>();
             services.AddTransient<IValidator<AppUserRegisterDto>, AppUserRegisterValidator>();
-        }
 
-        public static void AddIdentityConfiguration(this IServiceCollection services)
-        {
+            services.AddTransient<ICustomLogger, NLogLogger>();
+
+            services.AddDbContext<DataContext>();
+
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
             services.AddIdentity<AppUser, AppRole>(opt =>
             {
                 opt.User.RequireUniqueEmail = true;
                 opt.SignIn.RequireConfirmedEmail = true;
             }).AddErrorDescriber<PasswordValidationToTurkish>().AddEntityFrameworkStores<DataContext>().AddTokenProvider<DataProtectorTokenProvider<AppUser>>(TokenOptions.DefaultProvider);
-        }
 
-        public static void AddCookieConfiguration(this IServiceCollection services)
-        {
             services.ConfigureApplicationCookie(opt =>
             {
                 opt.Cookie.Name = "Web.Security.Cookie";
@@ -57,10 +65,7 @@ namespace LawyerWebSite.WebUI.ConfigureServicesCollection
                 opt.LoginPath = "/Dashboard/Index";
                 opt.AccessDeniedPath = "/Home/Index";
             });
-        }
 
-        public static void AddEmailServiceConfiguration(this IServiceCollection services, IConfiguration _configuration)
-        {
             services.AddScoped<IEmailReceiver, SmtpEmailReceiver>(a =>
             new SmtpEmailReceiver(
                     _configuration["EmailReceiver:Host"],
