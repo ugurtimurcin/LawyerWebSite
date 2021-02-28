@@ -1,6 +1,6 @@
-﻿using LawyerWebSite.Business.Interfaces;
+﻿using AutoMapper;
+using LawyerWebSite.Business.Interfaces;
 using LawyerWebSite.Entities.Concrete.DTOs;
-using Mapster;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -9,10 +9,12 @@ namespace LawyerWebSite.WebUI.Controllers
 {
     public class ArticleController : Controller
     {
+        private readonly IMapper _mapper;
         private readonly ICategoryService _categoryService;
         private readonly IArticleService _articleService;
-        public ArticleController(ICategoryService categoryService, IArticleService articleService)
+        public ArticleController(IMapper mapper, ICategoryService categoryService, IArticleService articleService)
         {
+            _mapper = mapper;
             _categoryService = categoryService;
             _articleService = articleService;
         }
@@ -22,15 +24,13 @@ namespace LawyerWebSite.WebUI.Controllers
         {
             ViewBag.Title = "Makaleler";
             TempData["Active"] = "articles";
-            var categories = await _categoryService.GetAllAsync();
-            return View(categories.Adapt<List<CategoryListDto>>());
+            return View(_mapper.Map<List<CategoryListDto>>((await _categoryService.GetAllAsync()).Data));
         }
         [Route("/makaleler/{url}")]
         public async Task<IActionResult> Articles(string url)
         {
             TempData["Active"] = "articles";
-            var articles = await _categoryService.GetCategoryWithArticlesByUrlAsync(url);
-            return View(articles.Adapt<CategoryAllListDto>());
+            return View(_mapper.Map<CategoryAllListDto>((await _categoryService.GetCategoryWithArticlesByUrlAsync(url)).Data));
         }
 
         [Route("/makaleler/makale/{url}")]
@@ -38,17 +38,10 @@ namespace LawyerWebSite.WebUI.Controllers
         {
             TempData["Active"] = "articles";
             var article = await _articleService.GetArticleWithCategoryByUrlAsync(url);
-            ViewBag.Title = article.Title.ToString();
-            ViewBag.Category = _categoryService.GetByIdAsync(article.CategoryId);
-            var model = new ArticleListDto()
-            {
-                Id = article.Id,
-                Title = article.Title,
-                Content = article.Content,
-                DateTime = article.DateTime,
-                Picture = article.Picture
-            };
-            return View(article.Adapt<ArticleListDto>());
+            ViewBag.Title = article.Data.Title.ToString();
+            ViewBag.Category = _categoryService.GetByIdAsync(article.Data.CategoryId);
+            
+            return View(_mapper.Map<List<ArticleListDto>>((await _articleService.GetArticleWithCategoryByUrlAsync(url)).Data));
         }
     }
 }

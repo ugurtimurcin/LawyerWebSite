@@ -1,6 +1,6 @@
-﻿using LawyerWebSite.Entities.Concrete.DTOs;
+﻿using AutoMapper;
+using LawyerWebSite.Entities.Concrete.DTOs;
 using LawyerWebSite.Entities.Concrete.Entities;
-using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -12,25 +12,26 @@ namespace LawyerWebSite.WebUI.Areas.Admin.Controllers
     [Authorize(Roles =("Admin"))]
     public class ProfileController : Controller
     {
+        private readonly IMapper _mapper;
         private readonly UserManager<AppUser> _userManager;
-        public ProfileController(UserManager<AppUser> userManager)
+        public ProfileController(IMapper mapper, UserManager<AppUser> userManager)
         {
+            _mapper = mapper;
             _userManager = userManager;
         }
         public async Task<IActionResult> Index()
         {
             TempData["Active"] = "profile";
-            var user = await _userManager.FindByNameAsync(User.Identity.Name);
-            return View(user.Adapt<AppUserEditDto>());
+
+            return View(_mapper.Map<AppUserEditDto>(await _userManager.FindByNameAsync(User.Identity.Name)));
         }
 
         [HttpPost]
         public async Task<IActionResult> Index(AppUserEditDto model)
-        {
-            var user = await _userManager.FindByEmailAsync(model.Email);
+        { 
             if (ModelState.IsValid)
             {
-                await _userManager.UpdateAsync(user.Adapt<AppUser>());
+                await _userManager.UpdateAsync(_mapper.Map<AppUser>(await _userManager.FindByEmailAsync(model.Email)));
                 TempData["Success"] = "Bilgileriniz <strong>başarılı</strong> bir şekilde güncellenmiştir."; 
                 return View();
             }

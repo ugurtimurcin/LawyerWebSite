@@ -1,13 +1,14 @@
-﻿using LawyerWebSite.Business.Interfaces;
+﻿using AutoMapper;
+using LawyerWebSite.Business.Interfaces;
 using LawyerWebSite.DataAccess.Concrete.EntityFrameworkCore.Context;
 using LawyerWebSite.Entities.Concrete.DTOs;
 using LawyerWebSite.Entities.Concrete.Entities;
 using LawyerWebSite.WebUI.Extensions;
-using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -19,28 +20,27 @@ namespace LawyerWebSite.WebUI.Areas.Admin.Controllers
     [Authorize(Roles = "Admin")]
     public class ArticleController : Controller
     {
+        private readonly IMapper _mapper;
         private readonly IArticleService _articleService;
         private readonly ICategoryService _categoryService;
-        private readonly DataContext _context;
-        public ArticleController(IArticleService articleService, ICategoryService categoryService, DataContext context)
+        public ArticleController(IMapper mapper, IArticleService articleService, ICategoryService categoryService)
         {
+            _mapper = mapper;
             _articleService = articleService;
             _categoryService = categoryService;
-            _context = context;
         }
         public async Task<IActionResult> Index()
         {
             TempData["Active"] = "article";
             ViewBag.Title = "Makaleler";
-            var articles = await _articleService.GetAllAsync();
 
-            return View(articles.Adapt<List<ArticleListDto>>());
+            return View(_mapper.Map<List<ArticleListDto>>(await _articleService.GetAllAsync()));
         }
         public async Task<IActionResult> AddArticle()
         {
             TempData["Active"] = "article";
             ViewBag.Title = "Makale Ekle";
-            ViewBag.Categories = new SelectList(await _categoryService.GetAllAsync(), "Id", "Name");
+            ViewBag.Categories = new SelectList(_mapper.Map<List<CategoryListDto>>(await _categoryService.GetAllAsync()), "Id", "Name");
             return View();
         }
 
@@ -49,35 +49,8 @@ namespace LawyerWebSite.WebUI.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var titleConv = new TitleConverter();
-                var urlConv = new UrlConverter();
-
-                if (pic != null)
-                {
-                    var extension = Path.GetExtension(pic.FileName);
-                    var name = urlConv.StringReplace(model.Title) + extension;
-                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/article-cover/" + name);
-                    using var stream = new FileStream(path, FileMode.Create);
-                    await pic.CopyToAsync(stream);
-                    model.Picture = name;
-
-                }
-
-                var article = new Article()
-                {
-                    Title = titleConv.TitleToPascalCase(model.Title),
-                    Content = model.Content.Replace("&nbsp;", " "),
-                    CategoryId = model.CategoryId,
-                    Url = urlConv.StringReplace(model.Title),
-                    Picture = model.Picture
-                };
-
-                if (_context.Articles.Any(x => x.Title == model.Title))
-                {
-                    ViewBag.TitleExist = titleConv.TitleToPascalCase(model.Title);
-                    return View(model);
-                }
-                await _articleService.AddAsync(article);
+                
+                await _articleService.AddAsync(_mapper.Map<Article>(model), pic);
                 return RedirectToAction("Index", "Article", new { area = "Admin" });
 
             }
@@ -87,9 +60,9 @@ namespace LawyerWebSite.WebUI.Areas.Admin.Controllers
         {
             TempData["Active"] = "article";
             ViewBag.Title = "Makale Düzenle";
-            ViewBag.Categories = new SelectList(await _categoryService.GetAllAsync(), "Id", "Name");
-            var article = await _articleService.GetByIdAsync(id);
-            return View(article.Adapt<ArticleEditDto>());
+            ViewBag.Categories = new SelectList(_mapper.Map<List<CategoryListDto>>(await _categoryService.GetAllAsync()), "Id", "Name");
+            
+            return View(_mapper.Map<ArticleEditDto>(await _articleService.GetByIdAsync(id)));
         }
 
         [HttpPost]
@@ -98,26 +71,7 @@ namespace LawyerWebSite.WebUI.Areas.Admin.Controllers
             var article = await _articleService.GetByIdAsync(model.Id);
             if (ModelState.IsValid)
             {
-                var titleConv = new TitleConverter();
-                var urlConv = new UrlConverter();
-
-                if (pic != null)
-                {
-                    var extension = Path.GetExtension(pic.FileName);
-                    var name = urlConv.StringReplace(model.Title) + extension;
-                    var path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot/img/article-cover/" + name);
-                    using var stream = new FileStream(path, FileMode.Create);
-                    await pic.CopyToAsync(stream);
-                    model.Picture = name;
-
-                    article.Picture = model.Picture;
-
-                }
-                article.Title = titleConv.TitleToPascalCase(model.Title);
-                article.Content = model.Content.Replace("&nbsp;", " ");
-                article.Url = urlConv.StringReplace(model.Title);
-                article.CategoryId = model.CategoryId;
-                await _articleService.UpdateAsync(article);
+                await _articleService.UpdateAsync(_mapper.Map<Article>(model), pic);
 
                 return RedirectToAction("Index", "Article", new { area = "Admin" });
             }

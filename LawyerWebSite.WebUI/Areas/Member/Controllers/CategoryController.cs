@@ -1,11 +1,12 @@
-﻿using LawyerWebSite.Business.Interfaces;
+﻿using AutoMapper;
+using LawyerWebSite.Business.Interfaces;
 using LawyerWebSite.DataAccess.Concrete.EntityFrameworkCore.Context;
 using LawyerWebSite.Entities.Concrete.DTOs;
 using LawyerWebSite.Entities.Concrete.Entities;
 using LawyerWebSite.WebUI.Extensions;
-using Mapster;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,20 +16,19 @@ namespace LawyerWebSite.WebUI.Areas.Member.Controllers
     [Authorize(Roles = "Member")]
     public class CategoryController : Controller
     {
+        private readonly IMapper _mapper;
         private readonly ICategoryService _categoryService;
-        private readonly DataContext _context;
-        public CategoryController(ICategoryService categoryService, DataContext context)
+        public CategoryController(IMapper mapper, ICategoryService categoryService)
         {
+            _mapper = mapper;
             _categoryService = categoryService;
-            _context = context;
         }
         public async Task<IActionResult> Index()
         {
             TempData["Active"] = "category";
             ViewBag.Title = "Kategoriler";
-            var categories = await _categoryService.GetAllAsync();
 
-            return View(categories.Adapt<CategoryListDto>());
+            return View(_mapper.Map<List<CategoryListDto>>(await _categoryService.GetAllAsync()));
         }
 
         public IActionResult AddCategory()
@@ -43,21 +43,8 @@ namespace LawyerWebSite.WebUI.Areas.Member.Controllers
         {
             if (ModelState.IsValid)
             {
-                var urlConvertor = new UrlConverter();
-                var titleConverter = new TitleConverter();
-                
-                var category = new Category()
-                {
-                    Name = titleConverter.TitleToPascalCase(model.Name),
-                    Url = urlConvertor.StringReplace(model.Name.ToLower())
-                };
-                if (_context.Categories.Any(x=>x.Name == model.Name))
-                {
-                    ViewBag.CategoryExsit = titleConverter.TitleToPascalCase(model.Name);
-                    return View(model);
-                }
 
-                await _categoryService.AddAsync(category);
+                await _categoryService.AddAsync(_mapper.Map<Category>(model));
                 return RedirectToAction("Index", "Category", new { area = "Member" });
 
             }
@@ -68,9 +55,8 @@ namespace LawyerWebSite.WebUI.Areas.Member.Controllers
         {
             TempData["Active"] = "category";
             ViewBag.Title = "Kategori Düzenle";
-            var category = await _categoryService.GetByIdAsync(id);
-
-            return View(category.Adapt<CategoryEditDto>());
+            
+            return View(_mapper.Map<CategoryEditDto>(await _categoryService.GetByIdAsync(id)));
         }
 
         [HttpPost]
@@ -78,13 +64,7 @@ namespace LawyerWebSite.WebUI.Areas.Member.Controllers
         {
             if (ModelState.IsValid)
             {
-                var convertor = new UrlConverter();
-                var titleConvertor = new TitleConverter();
-                var category = await _categoryService.GetByIdAsync(model.Id);
-                category.Name = titleConvertor.TitleToPascalCase(model.Name);
-                category.Url = convertor.StringReplace(model.Name);
-
-                await _categoryService.UpdateAsync(category);
+                await _categoryService.UpdateAsync(_mapper.Map<Category>(model));
 
                 return RedirectToAction("Index","Category", new { area = "Member" });
             }

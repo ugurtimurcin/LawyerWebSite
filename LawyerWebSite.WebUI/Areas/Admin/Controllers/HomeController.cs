@@ -1,4 +1,5 @@
-﻿using LawyerWebSite.Business.Interfaces;
+﻿using AutoMapper;
+using LawyerWebSite.Business.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -25,11 +26,11 @@ namespace LawyerWebSite.WebUI.Areas.Admin.Controllers
             TempData["Active"] = "home";
             ViewBag.Title = "Anasayfa";
 
-            ViewBag.TotalCategory = (await _categoryService.GetAllAsync()).Count;
-            ViewBag.TotalArticle = (await _articleService.GetAllAsync()).Count;
-            ViewBag.TotalWorkArea = (await _workAreaService.GetWokrAreasWithCategoryAsync()).Count;
-            ViewBag.TotalNotAssigntWorkArea = (await _categoryService.GetCategoriesWithNotSelectedWorkAreaAsync()).Count;
-            ViewBag.TotalUser = _appUserService.GetUsersNonAdmin().Count;
+            ViewBag.TotalCategory = (await _categoryService.GetAllAsync()).Data.Count;
+            ViewBag.TotalArticle = (await _articleService.GetAllAsync()).Data.Count;
+            ViewBag.TotalWorkArea = (await _workAreaService.GetWokrAreasWithCategoryAsync()).Data.Count;
+            ViewBag.TotalNotAssigntWorkArea = (await _categoryService.GetCategoriesWithNotSelectedWorkAreaAsync()).Data.Count;
+            ViewBag.TotalUser = _appUserService.GetUsersNonAdmin().Data.Count;
 
             return View();
         }

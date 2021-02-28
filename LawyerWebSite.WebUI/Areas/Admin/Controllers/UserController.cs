@@ -1,4 +1,5 @@
-﻿using LawyerWebSite.Business.Interfaces;
+﻿using AutoMapper;
+using LawyerWebSite.Business.Interfaces;
 using LawyerWebSite.Entities.Concrete.DTOs;
 using LawyerWebSite.Entities.Concrete.Entities;
 using LawyerWebSite.WebUI.EmailService;
@@ -15,12 +16,14 @@ namespace LawyerWebSite.WebUI.Areas.Admin.Controllers
     [Authorize(Roles ="Admin")]
     public class UserController : Controller
     {
+        private readonly IMapper _mapper;
         private readonly UserManager<AppUser> _userManager;
         private readonly RoleManager<AppRole> _roleManager;
         private readonly IAppUserService _userService;
         private readonly IEmailSender _emailSender;
-        public UserController(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IEmailSender emailSender, IAppUserService userService)
+        public UserController(IMapper mapper, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, IEmailSender emailSender, IAppUserService userService)
         {
+            _mapper = mapper;
             _userManager = userManager;
             _roleManager = roleManager;
             _emailSender = emailSender;
@@ -30,22 +33,8 @@ namespace LawyerWebSite.WebUI.Areas.Admin.Controllers
         {
             TempData["Active"] = "user";
             ViewBag.Title = "Kişiler";
-            var users = _userService.GetUsersNonAdmin();
-            var model = new List<AppUserListDto>();
-            foreach (var user in users)
-            {
-                var userModel = new AppUserListDto()
-                {
-                    Id = user.Id,
-                    FirstName = user.FirstName,
-                    LastName = user.LastName,
-                    UserName = user.UserName,
-                    Email = user.Email,
-                    IsConfirmed = user.EmailConfirmed
-                };
-                model.Add(userModel);
-            }
-            return View(model);
+            
+            return View(_mapper.Map<List<AppUserListDto>>(_userService.GetUsersNonAdmin()));
         }
 
         public IActionResult Register()
@@ -60,13 +49,7 @@ namespace LawyerWebSite.WebUI.Areas.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new AppUser()
-                {
-                    FirstName = model.FirstName,
-                    LastName = model.LastName,
-                    Email = model.Email,
-                    UserName = model.UserName
-                };
+                var user = _mapper.Map<AppUser>(model);
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
