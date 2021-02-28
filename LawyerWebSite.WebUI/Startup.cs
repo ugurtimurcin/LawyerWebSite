@@ -1,8 +1,10 @@
+using AutoMapper;
 using LawyerWebSite.Business.CustomLogger;
 using LawyerWebSite.Business.Interfaces;
 using LawyerWebSite.DataAccess.Concrete.EntityFrameworkCore.Context;
 using LawyerWebSite.Entities.Concrete.Entities;
 using LawyerWebSite.WebUI.ConfigureServicesCollection;
+using LawyerWebSite.WebUI.Mapping.AutoMapperProfile;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -32,6 +34,14 @@ namespace LawyerWebSite.WebUI
 
             services.AddDbContext<DataContext>();
             services.AddControllersWithViews();
+
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
