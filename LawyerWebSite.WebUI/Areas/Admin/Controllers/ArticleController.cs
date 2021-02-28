@@ -3,7 +3,6 @@ using LawyerWebSite.Business.Interfaces;
 using LawyerWebSite.DataAccess.Concrete.EntityFrameworkCore.Context;
 using LawyerWebSite.Entities.Concrete.DTOs;
 using LawyerWebSite.Entities.Concrete.Entities;
-using LawyerWebSite.WebUI.Extensions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
