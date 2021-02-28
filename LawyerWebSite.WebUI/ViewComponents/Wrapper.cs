@@ -1,6 +1,6 @@
-﻿using LawyerWebSite.Business.Interfaces;
+﻿using AutoMapper;
+using LawyerWebSite.Business.Interfaces;
 using LawyerWebSite.Entities.Concrete.DTOs;
-using Mapster;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 
@@ -8,35 +8,21 @@ namespace LawyerWebSite.WebUI.ViewComponents
 {
     public class Wrapper: ViewComponent
     {
+        private readonly IMapper _mapper;
         private readonly IArticleService _articleservice;
         private readonly IWorkAreaService _workAreaService;
-        public Wrapper(IArticleService articleservice, IWorkAreaService workAreaService)
+        public Wrapper(IMapper mapper, IArticleService articleservice, IWorkAreaService workAreaService)
         {
+            _mapper = mapper;
             _articleservice = articleservice;
             _workAreaService = workAreaService;
         }
         public IViewComponentResult Invoke()
         {
+            ViewBag.WorkAreas = _mapper.Map<List<WorkAreaListDto>>((_workAreaService.GetWokrAreasWithCategoryAsync().Result).Data);
 
-            var workareas = _workAreaService.GetWokrAreasWithCategoryAsync().Result;
-            var workList = workareas.Adapt<List<WorkAreaListDto>>();
-            ViewBag.WorkAreas = workList;
+            ViewBag.Articles = _mapper.Map<List<ArticleListDto>>((_articleservice.GetArticlesTop6Async().Result).Data);
 
-            var articles = _articleservice.GetArticlesTop6Async().Result;
-            var list = articles.Adapt<List<ArticleListDto>>();
-            ViewBag.Articles = list;
-
-            //var workList = new List<WorkAreaListViewDto>();
-            //foreach (var item in workareas)
-            //{
-            //    var model = new WorkAreaListViewDto()
-            //    {
-            //        Category = item.Category,
-            //        Description = item.Desciption,
-            //        Picture = item.Picture,
-            //        Id = item.Id
-            //    };
-            //}
             return View();
         }
     }
