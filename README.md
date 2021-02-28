@@ -44,7 +44,7 @@ share articles dynamiclly, also category can be builded so articles can be categ
 * [.Net Core](https://docs.microsoft.com/en-us/dotnet/core/dotnet-five)
 
 ### Packages
-<a href="https://github.com/MapsterMapper/Mapster">Mapster</a><br/>
+<a href="https://automapper.org/">AutoMapper</a><br/>
 <a href="https://fluentvalidation.net/">Fluent Validation</a><br/>
 <a href="https://nlog-project.org/">NLog</a><br/>
 <a href="https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity?view=aspnetcore-5.0&tabs=visual-studio">ASP.NET Core Identity</a>
