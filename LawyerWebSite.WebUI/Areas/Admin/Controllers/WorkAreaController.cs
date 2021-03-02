@@ -29,10 +29,10 @@ namespace LawyerWebSite.WebUI.Areas.Admin.Controllers
         public async Task<IActionResult> Index()
         {
             TempData["Active"] = "workarea";
-            ViewBag.EmptyWorkAreas = await _categoryService.GetCategoriesWithNotSelectedWorkAreaAsync();
+            ViewBag.EmptyWorkAreas = (await _categoryService.GetCategoriesWithNotSelectedWorkAreaAsync()).Data;
             ViewBag.EmptyWorkAreasCount = (await _categoryService.GetCategoriesWithNotSelectedWorkAreaAsync()).Data.Count;
 
-            return View(_mapper.Map<List<WorkAreaListDto>>(await _workAreaService.GetWokrAreasWithCategoryAsync()));
+            return View(_mapper.Map<List<WorkAreaListDto>>((await _workAreaService.GetWokrAreasWithCategoryAsync()).Data));
         }
 
 
@@ -60,7 +60,7 @@ namespace LawyerWebSite.WebUI.Areas.Admin.Controllers
         {
             ViewBag.Categories = new SelectList((await _categoryService.GetAllAsync()).Data, "Id", "Name");
 
-            return View(_mapper.Map<WorkAreaEditDto>(await _workAreaService.GetByIdAsync(id)));
+            return View(_mapper.Map<WorkAreaEditDto>((await _workAreaService.GetByIdAsync(id)).Data));
         }
 
         [HttpPost]

@@ -23,23 +23,23 @@ namespace LawyerWebSite.WebUI.Areas.Member.Controllers
         {
             _categoryService = categoryService;
             _workAreaService = workAreaService;
+            _mapper = mapper;
 
         }
         public async Task<IActionResult> Index()
         {
             TempData["Active"] = "workarea";
-            ViewBag.EmptyWorkAreas = await _categoryService.GetCategoriesWithNotSelectedWorkAreaAsync();
-            var count = await _categoryService.GetCategoriesWithNotSelectedWorkAreaAsync();
-            ViewBag.EmptyWorkAreasCount = count.Data.Count;
+            ViewBag.EmptyWorkAreas = (await _categoryService.GetCategoriesWithNotSelectedWorkAreaAsync()).Data;
+            ViewBag.EmptyWorkAreasCount = (await _categoryService.GetCategoriesWithNotSelectedWorkAreaAsync()).Data.Count;
             
-            return View(_mapper.Map<List<WorkAreaListDto>>(await _workAreaService.GetWokrAreasWithCategoryAsync()));
+            return View(_mapper.Map<List<WorkAreaListDto>>((await _workAreaService.GetWokrAreasWithCategoryAsync()).Data));
         }
 
 
         public async Task<IActionResult> AddWorkArea()
         {
             TempData["Active"] = "workarea";
-            ViewBag.Categories = new SelectList( _mapper.Map<List<CategoryListDto>>(await _categoryService.GetCategoriesWithNotSelectedWorkAreaAsync()), "Id", "Name");
+            ViewBag.Categories = new SelectList(_mapper.Map<List<CategoryListDto>>((await _categoryService.GetCategoriesWithNotSelectedWorkAreaAsync()).Data), "Id", "Name");
             return View();
         }
 
@@ -57,9 +57,9 @@ namespace LawyerWebSite.WebUI.Areas.Member.Controllers
 
         public async Task<IActionResult> EditWorkArea(int id)
         {
-            ViewBag.Categories = new SelectList(_mapper.Map<List<CategoryListDto>>(await _categoryService.GetAllAsync()), "Id", "Name");
+            ViewBag.Categories = new SelectList(_mapper.Map<List<CategoryListDto>>((await _categoryService.GetAllAsync()).Data), "Id", "Name");
 
-            return View(_mapper.Map<WorkAreaEditDto>(await _workAreaService.GetByIdAsync(id)));
+            return View(_mapper.Map<WorkAreaEditDto>((await _workAreaService.GetByIdAsync(id)).Data));
         }
 
         [HttpPost]

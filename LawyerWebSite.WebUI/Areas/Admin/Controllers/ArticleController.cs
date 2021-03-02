@@ -33,13 +33,13 @@ namespace LawyerWebSite.WebUI.Areas.Admin.Controllers
             TempData["Active"] = "article";
             ViewBag.Title = "Makaleler";
 
-            return View(_mapper.Map<List<ArticleListDto>>(await _articleService.GetAllAsync()));
+            return View(_mapper.Map<List<ArticleListDto>>((await _articleService.GetAllAsync()).Data));
         }
         public async Task<IActionResult> AddArticle()
         {
             TempData["Active"] = "article";
             ViewBag.Title = "Makale Ekle";
-            ViewBag.Categories = new SelectList(_mapper.Map<List<CategoryListDto>>(await _categoryService.GetAllAsync()), "Id", "Name");
+            ViewBag.Categories = new SelectList(_mapper.Map<List<CategoryListDto>>((await _categoryService.GetAllAsync()).Data), "Id", "Name");
             return View();
         }
 
@@ -59,9 +59,9 @@ namespace LawyerWebSite.WebUI.Areas.Admin.Controllers
         {
             TempData["Active"] = "article";
             ViewBag.Title = "Makale Düzenle";
-            ViewBag.Categories = new SelectList(_mapper.Map<List<CategoryListDto>>(await _categoryService.GetAllAsync()), "Id", "Name");
+            ViewBag.Categories = new SelectList(_mapper.Map<List<CategoryListDto>>((await _categoryService.GetAllAsync()).Data), "Id", "Name");
             
-            return View(_mapper.Map<ArticleEditDto>(await _articleService.GetByIdAsync(id)));
+            return View(_mapper.Map<ArticleEditDto>((await _articleService.GetByIdAsync(id)).Data));
         }
 
         [HttpPost]

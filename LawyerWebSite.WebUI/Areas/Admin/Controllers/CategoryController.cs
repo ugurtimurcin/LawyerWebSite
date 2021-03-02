@@ -27,7 +27,7 @@ namespace LawyerWebSite.WebUI.Areas.Admin.Controllers
             TempData["Active"] = "category";
             ViewBag.Title = "Kategoriler";
 
-            return View(_mapper.Map<List<CategoryListDto>>(await _categoryService.GetAllAsync()));
+            return View(_mapper.Map<List<CategoryListDto>>((await _categoryService.GetAllAsync()).Data));
         }
 
         public IActionResult AddCategory()
@@ -54,7 +54,7 @@ namespace LawyerWebSite.WebUI.Areas.Admin.Controllers
             TempData["Active"] = "category";
             ViewBag.Title = "Kategori Düzenle";
 
-            return View(_mapper.Map<CategoryEditDto>(await _categoryService.GetByIdAsync(id)));
+            return View(_mapper.Map<CategoryEditDto>((await _categoryService.GetByIdAsync(id)).Data));
         }
 
         [HttpPost]
