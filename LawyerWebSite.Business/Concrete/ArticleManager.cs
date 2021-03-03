@@ -1,5 +1,6 @@
 ﻿using LawyerWebSite.Business.Constants;
 using LawyerWebSite.Business.Interfaces;
+using LawyerWebSite.Core.Business;
 using LawyerWebSite.Core.Utilities.Converter;
 using LawyerWebSite.Core.Utilities.Helpers.FileHelpers;
 using LawyerWebSite.Core.Utilities.Results.Abstract;
@@ -10,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace LawyerWebSite.Business.Concrete
@@ -23,6 +25,12 @@ namespace LawyerWebSite.Business.Concrete
         }
         public async Task<IResult> AddAsync(Article entity, IFormFile file)
         {
+            IResult result = BusinessRules.Run(await ArticleAlreadyExists(entity.Title));
+            if (result != null)
+            {
+                return result;
+            }
+
             entity.Picture = Guid.NewGuid() + Path.GetExtension(file.FileName);
             await ImageProcessHelper.UploadAsync(entity.Picture, FolderDirectories.ArticleFolder, file);
 
@@ -72,6 +80,16 @@ namespace LawyerWebSite.Business.Concrete
             entity.Url = StringHelper.FriendlyUrl(entity.Title);
 
             await _articleDal.UpdateAsync(entity);
+            return new SuccessResult();
+        }
+
+        private async Task<IResult> ArticleAlreadyExists(string title)
+        {
+            var result = (await _articleDal.GetAllAsync(x => x.Title == title)).Any();
+            if (result)
+            {
+                return new ErrorResult(Messages.CategoryAlreadyExists);
+            }
             return new SuccessResult();
         }
 
