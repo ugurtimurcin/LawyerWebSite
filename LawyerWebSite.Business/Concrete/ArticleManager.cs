@@ -26,8 +26,8 @@ namespace LawyerWebSite.Business.Concrete
             entity.Picture = Guid.NewGuid() + Path.GetExtension(file.FileName);
             await ImageProcessHelper.UploadAsync(entity.Picture, FolderDirectories.ArticleFolder, file);
 
-            UrlGenerator(entity.Title);
-            TitleGenerator(entity.Title);
+            entity.Title = StringHelper.TitleToPascalCase(entity.Title);
+            entity.Url = StringHelper.FriendlyUrl(entity.Title);
 
             await _articleDal.AddAsync(entity);
             return new SuccessResult();
@@ -68,24 +68,12 @@ namespace LawyerWebSite.Business.Concrete
             entity.Picture = Guid.NewGuid() + Path.GetExtension(file.FileName);
             await ImageProcessHelper.UploadAsync(entity.Picture, FolderDirectories.ArticleFolder, file);
 
-            UrlGenerator(entity.Title);
-            TitleGenerator(entity.Title);
+            entity.Title = StringHelper.TitleToPascalCase(entity.Title);
+            entity.Url = StringHelper.FriendlyUrl(entity.Title);
 
             await _articleDal.UpdateAsync(entity);
             return new SuccessResult();
         }
 
-        private IResult UrlGenerator(string text)
-        {
-            var generator = new StringConverter();
-            text = generator.StringReplace(text);
-            return new SuccessResult();
-        }
-        private IResult TitleGenerator(string text)
-        {
-            var generator = new StringConverter();
-            text = generator.TitleToPascalCase(text);
-            return new SuccessResult();
-        }
     }
 }

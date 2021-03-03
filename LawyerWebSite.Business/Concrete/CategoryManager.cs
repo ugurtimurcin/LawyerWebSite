@@ -1,4 +1,5 @@
 ﻿using LawyerWebSite.Business.Interfaces;
+using LawyerWebSite.Core.Utilities.Converter;
 using LawyerWebSite.Core.Utilities.Results.Abstract;
 using LawyerWebSite.Core.Utilities.Results.Concrete;
 using LawyerWebSite.DataAccess.Interfaces;
@@ -18,6 +19,8 @@ namespace LawyerWebSite.Business.Concrete
 
         public async Task<IResult> AddAsync(Category entity)
         {
+            entity.Name = StringHelper.TitleToPascalCase(entity.Name);
+            entity.Url = StringHelper.FriendlyUrl(entity.Name);
             await _categoryDal.AddAsync(entity);
             return new SuccessResult();
         }
@@ -61,8 +64,12 @@ namespace LawyerWebSite.Business.Concrete
 
         public async Task<IResult> UpdateAsync(Category entity)
         {
+            entity.Name = StringHelper.TitleToPascalCase(entity.Name);
+            entity.Url = StringHelper.FriendlyUrl(entity.Name);
             await _categoryDal.UpdateAsync(entity);
             return new SuccessResult();
         }
+
+       
     }
 }
