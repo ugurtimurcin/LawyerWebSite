@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,10 +25,10 @@ namespace LawyerWebSite.Core.DataAccess
             await context.SaveChangesAsync();
         }
 
-        public async Task<List<TEntity>> GetAllAsync()
+        public async Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> predicate = null)
         {
             using var context = new TContext();
-            return await context.Set<TEntity>().ToListAsync();
+            return predicate == null ? await context.Set<TEntity>().ToListAsync() : await context.Set<TEntity>().Where(predicate).ToListAsync();
         }
 
         public async Task<TEntity> GetByIdAsync(int id)

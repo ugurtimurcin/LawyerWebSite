@@ -1,6 +1,7 @@
 ﻿using LawyerWebSite.Core.Entities;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,6 +13,6 @@ namespace LawyerWebSite.Core.DataAccess
         Task UpdateAsync(T entity);
         Task DeleteAsync(T entity);
         Task<T> GetByIdAsync(int id);
-        Task<List<T>> GetAllAsync();
+        Task<List<T>> GetAllAsync(Expression<Func<T, bool>> predicate = null);
     }
 }
