@@ -34,7 +34,7 @@ namespace LawyerWebSite.WebUI.Areas.Admin.Controllers
             TempData["Active"] = "user";
             ViewBag.Title = "Kişiler";
             
-            return View(_mapper.Map<List<AppUserListDto>>(_userService.GetUsersNonAdmin()));
+            return View(_mapper.Map<List<AppUserListDto>>(_userService.GetUsersNonAdmin().Data));
         }
 
         public IActionResult Register()
