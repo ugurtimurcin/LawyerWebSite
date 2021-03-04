@@ -14,9 +14,10 @@ namespace LawyerWebSite.WebUI.Areas.Member.Controllers
     {
         private readonly IMapper _mapper;
         private readonly UserManager<AppUser> _userManager;
-        public ProfileController(UserManager<AppUser> userManager)
+        public ProfileController(UserManager<AppUser> userManager, IMapper mapper)
         {
             _userManager = userManager;
+            _mapper = mapper;
         }
         public async Task<IActionResult> Index()
         {
