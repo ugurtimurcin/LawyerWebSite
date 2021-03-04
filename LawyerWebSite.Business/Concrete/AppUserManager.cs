@@ -1,9 +1,9 @@
-﻿using LawyerWebSite.Business.Interfaces;
-using LawyerWebSite.Core.Utilities.Results.Abstract;
+﻿using LawyerWebSite.Core.Utilities.Results.Abstract;
 using LawyerWebSite.Core.Utilities.Results.Concrete;
-using LawyerWebSite.DataAccess.Interfaces;
 using LawyerWebSite.Entities.Concrete.Entities;
 using System.Collections.Generic;
+using LawyerWebSite.Business.Interface;
+using LawyerWebSite.DataAccess.Interface;
 
 namespace LawyerWebSite.Business.Concrete
 {

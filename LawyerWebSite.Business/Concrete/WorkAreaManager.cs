@@ -1,9 +1,7 @@
 ﻿using LawyerWebSite.Business.Constants;
-using LawyerWebSite.Business.Interfaces;
 using LawyerWebSite.Core.Utilities.Helpers.FileHelpers;
 using LawyerWebSite.Core.Utilities.Results.Abstract;
 using LawyerWebSite.Core.Utilities.Results.Concrete;
-using LawyerWebSite.DataAccess.Interfaces;
 using LawyerWebSite.Entities.Concrete;
 using LawyerWebSite.Entities.Concrete.DTOs;
 using LawyerWebSite.Entities.Concrete.Entities;
@@ -13,6 +11,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using LawyerWebSite.Business.Interface;
+using LawyerWebSite.DataAccess.Interface;
 
 namespace LawyerWebSite.Business.Concrete
 {

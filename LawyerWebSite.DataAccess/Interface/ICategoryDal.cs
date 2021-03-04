@@ -1,9 +1,9 @@
-﻿using LawyerWebSite.Core.DataAccess;
-using LawyerWebSite.Entities.Concrete.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using LawyerWebSite.Core.DataAccess;
+using LawyerWebSite.Entities.Concrete.Entities;
 
-namespace LawyerWebSite.DataAccess.Interfaces
+namespace LawyerWebSite.DataAccess.Interface
 {
     public interface ICategoryDal: IGenericDal<Category>
     {

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using LawyerWebSite.Business.Interfaces;
 using LawyerWebSite.Entities.Concrete.DTOs;
 using LawyerWebSite.Entities.Concrete.Entities;
 using Microsoft.AspNetCore.Authorization;
@@ -9,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using LawyerWebSite.Business.Interface;
 
 namespace LawyerWebSite.WebUI.Areas.Member.Controllers
 {

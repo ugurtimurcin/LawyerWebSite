@@ -1,5 +1,5 @@
 using LawyerWebSite.Entities.Concrete.Entities;
-using LawyerWebSite.WebUI.ConfigureServicesCollection;
+using LawyerWebSite.WebUI.Container;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;

@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using LawyerWebSite.Business.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using LawyerWebSite.Business.Interface;
 
 namespace LawyerWebSite.WebUI.Areas.Admin.Controllers
 {

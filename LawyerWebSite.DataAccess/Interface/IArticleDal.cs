@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LawyerWebSite.DataAccess.Interfaces
+namespace LawyerWebSite.DataAccess.Interface
 {
     public interface IArticleDal: IGenericDal<Article>
     {

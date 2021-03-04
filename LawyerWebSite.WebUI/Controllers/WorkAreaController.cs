@@ -1,9 +1,9 @@
 ﻿using AutoMapper;
-using LawyerWebSite.Business.Interfaces;
 using LawyerWebSite.Entities.Concrete.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using LawyerWebSite.Business.Interface;
 
 namespace LawyerWebSite.WebUI.Controllers
 {

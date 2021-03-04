@@ -1,14 +1,14 @@
 ﻿using LawyerWebSite.Business.Constants;
-using LawyerWebSite.Business.Interfaces;
 using LawyerWebSite.Core.Business;
 using LawyerWebSite.Core.Utilities.Converter;
 using LawyerWebSite.Core.Utilities.Results.Abstract;
 using LawyerWebSite.Core.Utilities.Results.Concrete;
-using LawyerWebSite.DataAccess.Interfaces;
 using LawyerWebSite.Entities.Concrete.Entities;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LawyerWebSite.Business.Interface;
+using LawyerWebSite.DataAccess.Interface;
 
 namespace LawyerWebSite.Business.Concrete
 {

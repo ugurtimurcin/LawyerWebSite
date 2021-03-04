@@ -2,7 +2,7 @@
 using LawyerWebSite.Entities.Concrete.Entities;
 using System.Collections.Generic;
 
-namespace LawyerWebSite.Business.Interfaces
+namespace LawyerWebSite.Business.Interface
 {
     public interface IAppUserService
     {

@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using LawyerWebSite.Business.Interfaces;
 using LawyerWebSite.Entities.Concrete.DTOs;
 using LawyerWebSite.Entities.Concrete.Entities;
 using LawyerWebSite.WebUI.EmailService;
@@ -9,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LawyerWebSite.Business.Interface;
 
 namespace LawyerWebSite.WebUI.Areas.Admin.Controllers
 {

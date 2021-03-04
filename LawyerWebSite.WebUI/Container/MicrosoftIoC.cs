@@ -1,12 +1,13 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using FluentValidation;
 using LawyerWebSite.Business.Concrete;
 using LawyerWebSite.Business.CustomLogger;
-using LawyerWebSite.Business.Interfaces;
+using LawyerWebSite.Business.Interface;
 using LawyerWebSite.Business.ValidationRules.FluentValdation.AppUser;
 using LawyerWebSite.DataAccess.Concrete.EntityFrameworkCore.Context;
 using LawyerWebSite.DataAccess.Concrete.EntityFrameworkCore.Repositories;
-using LawyerWebSite.DataAccess.Interfaces;
+using LawyerWebSite.DataAccess.Interface;
 using LawyerWebSite.Entities.Concrete.DTOs;
 using LawyerWebSite.Entities.Concrete.Entities;
 using LawyerWebSite.WebUI.CustomValidator;
@@ -16,9 +17,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 
-namespace LawyerWebSite.WebUI.ConfigureServicesCollection
+namespace LawyerWebSite.WebUI.Container
 {
     public static class MicrosoftIoC
     {

@@ -1,9 +1,9 @@
-﻿using LawyerWebSite.Core.Utilities.Results.Abstract;
-using LawyerWebSite.Entities.Concrete.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using LawyerWebSite.Core.Utilities.Results.Abstract;
+using LawyerWebSite.Entities.Concrete.Entities;
 
-namespace LawyerWebSite.Business.Interfaces
+namespace LawyerWebSite.Business.Interface
 {
     public interface ICategoryService
     {

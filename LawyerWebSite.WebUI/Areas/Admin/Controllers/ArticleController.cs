@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using LawyerWebSite.Business.Interfaces;
 using LawyerWebSite.DataAccess.Concrete.EntityFrameworkCore.Context;
 using LawyerWebSite.Entities.Concrete.DTOs;
 using LawyerWebSite.Entities.Concrete.Entities;
@@ -12,6 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using LawyerWebSite.Business.Interface;
 
 namespace LawyerWebSite.WebUI.Areas.Admin.Controllers
 {

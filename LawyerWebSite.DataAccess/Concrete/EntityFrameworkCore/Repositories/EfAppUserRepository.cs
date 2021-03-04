@@ -1,8 +1,8 @@
 ﻿using LawyerWebSite.DataAccess.Concrete.EntityFrameworkCore.Context;
-using LawyerWebSite.DataAccess.Interfaces;
 using LawyerWebSite.Entities.Concrete.Entities;
 using System.Collections.Generic;
 using System.Linq;
+using LawyerWebSite.DataAccess.Interface;
 
 namespace LawyerWebSite.DataAccess.Concrete.EntityFrameworkCore.Repositories
 {

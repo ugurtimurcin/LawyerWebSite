@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
-using LawyerWebSite.Business.Interfaces;
 using LawyerWebSite.Entities.Concrete.DTOs;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using LawyerWebSite.Business.Interface;
 
 namespace LawyerWebSite.WebUI.ViewComponents
 {

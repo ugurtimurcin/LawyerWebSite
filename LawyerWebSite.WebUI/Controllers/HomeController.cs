@@ -1,5 +1,4 @@
-﻿using LawyerWebSite.Business.Interfaces;
-using LawyerWebSite.WebUI.EmailService;
+﻿using LawyerWebSite.WebUI.EmailService;
 using LawyerWebSite.WebUI.Models;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
@@ -7,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LawyerWebSite.Business.Interface;
 
 namespace LawyerWebSite.WebUI.Controllers
 {

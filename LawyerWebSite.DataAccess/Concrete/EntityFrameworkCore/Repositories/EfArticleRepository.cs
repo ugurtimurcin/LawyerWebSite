@@ -1,11 +1,11 @@
 ﻿using LawyerWebSite.Core.DataAccess;
 using LawyerWebSite.DataAccess.Concrete.EntityFrameworkCore.Context;
-using LawyerWebSite.DataAccess.Interfaces;
 using LawyerWebSite.Entities.Concrete.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using LawyerWebSite.DataAccess.Interface;
 
 namespace LawyerWebSite.DataAccess.Concrete.EntityFrameworkCore.Repositories
 {
