@@ -67,7 +67,6 @@ namespace LawyerWebSite.WebUI.Areas.Admin.Controllers
         [HttpPost]
         public async Task<IActionResult> EditArticle(ArticleEditDto model, IFormFile pic)
         {
-            var article = await _articleService.GetByIdAsync(model.Id);
             if (ModelState.IsValid)
             {
                 await _articleService.UpdateAsync(_mapper.Map<Article>(model), pic);
